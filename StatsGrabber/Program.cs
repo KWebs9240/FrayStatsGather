@@ -1,4 +1,6 @@
 ﻿using ChallongeApiHelper;
+using ChallongeEntities.Match;
+using ChallongeEntities.Participant;
 using ChallongeEntities.Tournament;
 using Newtonsoft.Json;
 using System;
@@ -24,7 +26,10 @@ namespace StatsGrabber
             int tournId2 = tournamentList[1].tournament.id;
 
             var matchGetResponse = ChallongeHttpHelper.BasicGet($"tournaments/{tournamentId}/matches.json");
-            var matchGetResponse2 = ChallongeHttpHelper.BasicGet($"tournaments/{tournId2}/matches.json");
+            List<MatchHolderGarbage> matchList = JsonConvert.DeserializeObject<List<MatchHolderGarbage>>(matchGetResponse);
+
+            var participantResponse = ChallongeHttpHelper.BasicGet($"tournaments/{tournamentId}/participants.json");
+            List<ParticipantHolderGarbage> participantList = JsonConvert.DeserializeObject<List<ParticipantHolderGarbage>>(participantResponse);
         }
     }
 }
