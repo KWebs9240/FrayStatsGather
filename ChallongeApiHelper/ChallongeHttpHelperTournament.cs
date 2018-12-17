@@ -10,11 +10,11 @@ namespace ChallongeApiHelper
 {
     public static partial class ChallongeHttpHelper
     {
-        public static List<TournamentHolderGarbage> GetAllTournaments()
+        public static List<TournamentRetrieval> GetAllTournaments()
         {
-            var getResponse = ChallongeHttpHelper.BasicGet("tournaments.json");
+            var getResponse = BasicGet("tournaments.json");
 
-            return JsonConvert.DeserializeObject<List<TournamentHolderGarbage>>(getResponse);
+            return JsonConvert.DeserializeObject<List<TournamentHolderGarbage>>(getResponse).Select(x => x.tournament).ToList();
         }
     }
 }

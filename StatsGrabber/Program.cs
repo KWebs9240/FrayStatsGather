@@ -19,14 +19,16 @@ namespace StatsGrabber
             string thing = ConfigurationManager.AppSettings["ApiUsername"];
             ChallongeHttpHelper.setAuthorizationHeader(ConfigurationManager.AppSettings["ApiUsername"], ConfigurationManager.AppSettings["ApiPassword"]);
 
-            List<TournamentHolderGarbage> tournamentList = ChallongeHttpHelper.GetAllTournaments();
+            List<TournamentRetrieval> tournamentList = ChallongeHttpHelper.GetAllTournaments();
 
-            int tournamentId = tournamentList.First().tournament.id;
-            int tournId2 = tournamentList[1].tournament.id;
+            int tournamentId = tournamentList.Last().id;
 
-            List<MatchHolderGarbage> matchList = ChallongeHttpHelper.GetTournamentMatches(tournamentId);
+            List<MatchRetrieval> matchList = ChallongeHttpHelper.GetTournamentMatches(tournamentId);
 
-            List<ParticipantHolderGarbage> participantList = ChallongeHttpHelper.GetTournamentParticipants(tournamentId);
+            List<ParticipantRetrieval> participantList = ChallongeHttpHelper.GetTournamentParticipants(tournamentId);
+
+            MatchRetrieval finalsMatch = matchList.OrderByDescending(x => x.round).First();
+            ParticipantRetrieval winner = participantList.First(x => x.id.Equals(finalsMatch.winner_id));
         }
     }
 }
