@@ -45,11 +45,19 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ChallongeHttpHelper.cs" />
+    <Compile Include="ChallongeHttpHelperParticipant.cs" />
+    <Compile Include="ChallongeHttpHelperMatch.cs" />
     <Compile Include="ChallongeHttpHelperTournament.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ChallongeEntities\ChallongeEntities.csproj">
+      <Project>{8E5BBA13-67E9-4883-AB3F-540D99F1606D}</Project>
+      <Name>ChallongeEntities</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

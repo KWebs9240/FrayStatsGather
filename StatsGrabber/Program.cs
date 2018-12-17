@@ -18,18 +18,15 @@ namespace StatsGrabber
         {
             string thing = ConfigurationManager.AppSettings["ApiUsername"];
             ChallongeHttpHelper.setAuthorizationHeader(ConfigurationManager.AppSettings["ApiUsername"], ConfigurationManager.AppSettings["ApiPassword"]);
-            var getResponse = ChallongeHttpHelper.BasicGet("tournaments.json");
 
-            List<TournamentHolderGarbage> tournamentList = JsonConvert.DeserializeObject<List<TournamentHolderGarbage>>(getResponse);
+            List<TournamentHolderGarbage> tournamentList = ChallongeHttpHelper.GetAllTournaments();
 
             int tournamentId = tournamentList.First().tournament.id;
             int tournId2 = tournamentList[1].tournament.id;
 
-            var matchGetResponse = ChallongeHttpHelper.BasicGet($"tournaments/{tournamentId}/matches.json");
-            List<MatchHolderGarbage> matchList = JsonConvert.DeserializeObject<List<MatchHolderGarbage>>(matchGetResponse);
+            List<MatchHolderGarbage> matchList = ChallongeHttpHelper.GetTournamentMatches(tournamentId);
 
-            var participantResponse = ChallongeHttpHelper.BasicGet($"tournaments/{tournamentId}/participants.json");
-            List<ParticipantHolderGarbage> participantList = JsonConvert.DeserializeObject<List<ParticipantHolderGarbage>>(participantResponse);
+            List<ParticipantHolderGarbage> participantList = ChallongeHttpHelper.GetTournamentParticipants(tournamentId);
         }
     }
 }
