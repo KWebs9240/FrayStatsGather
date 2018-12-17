@@ -41,6 +41,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Match\MatchHolderGarbage.cs" />
+    <Compile Include="Match\MatchRetrieval.cs" />
     <Compile Include="Tournament\TournamentConstants.cs" />
     <Compile Include="Tournament\TournamentCreation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -19,6 +19,12 @@ namespace StatsGrabber
             var getResponse = ChallongeHttpHelper.BasicGet("tournaments.json");
 
             List<TournamentHolderGarbage> tournamentList = JsonConvert.DeserializeObject<List<TournamentHolderGarbage>>(getResponse);
+
+            int tournamentId = tournamentList.First().tournament.id;
+            int tournId2 = tournamentList[1].tournament.id;
+
+            var matchGetResponse = ChallongeHttpHelper.BasicGet($"tournaments/{tournamentId}/matches.json");
+            var matchGetResponse2 = ChallongeHttpHelper.BasicGet($"tournaments/{tournId2}/matches.json");
         }
     }
 }
