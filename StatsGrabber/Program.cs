@@ -1,7 +1,6 @@
 ﻿using ChallongeApiHelper;
-using ChallongeEntities.Match;
-using ChallongeEntities.Participant;
-using ChallongeEntities.Tournament;
+using ChallongeEntities;
+using CoreStatsGather;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -27,8 +26,7 @@ namespace StatsGrabber
 
             List<ParticipantRetrieval> participantList = ChallongeHttpHelper.GetTournamentParticipants(tournamentId);
 
-            MatchRetrieval finalsMatch = matchList.OrderByDescending(x => x.round).First();
-            ParticipantRetrieval winner = participantList.First(x => x.id.Equals(finalsMatch.winner_id));
+            ParticipantRetrieval winner = ChallongeStaticHelpers.DetermineTournamentWinner(matchList, participantList);
         }
     }
 }

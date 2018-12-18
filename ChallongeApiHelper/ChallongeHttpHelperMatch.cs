@@ -1,4 +1,4 @@
-﻿using ChallongeEntities.Match;
+﻿using ChallongeEntities;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;

@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ChallongeEntities.Tournament
+namespace ChallongeEntities
 {
     public static class TournamentConstants
     {

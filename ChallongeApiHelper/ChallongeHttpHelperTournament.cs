@@ -1,4 +1,4 @@
-﻿using ChallongeEntities.Tournament;
+﻿using ChallongeEntities;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
