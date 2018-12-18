@@ -1,4 +1,5 @@
 ﻿using ChallongeApiHelper;
+using ChallongeApiHelper.DataHelper;
 using ChallongeEntities;
 using CoreStatsGather;
 using Newtonsoft.Json;
@@ -16,10 +17,7 @@ namespace StatsGrabber
     {
         static void Main(string[] args)
         {
-            string thing = ConfigurationManager.AppSettings["ApiUsername"];
-            ChallongeHttpHelper.setAuthorizationHeader(ConfigurationManager.AppSettings["ApiUsername"], ConfigurationManager.AppSettings["ApiPassword"]);
-
-            List<TournamentRetrieval> tournamentList = ChallongeHttpHelper.GetAllTournaments();
+            List<TournamentRetrieval> tournamentList = ChallongeDataHelper.GetAllTournaments();
 
             Dictionary<int, List<MatchRetrieval>> tournyIdMatchDict = new Dictionary<int, List<MatchRetrieval>>();
             Dictionary<int, List<ParticipantRetrieval>> tournyIdParticipantDict = new Dictionary<int, List<ParticipantRetrieval>>();
@@ -29,8 +27,8 @@ namespace StatsGrabber
 
             foreach(TournamentRetrieval tournament in tournamentList)
             {
-                tournyIdMatchDict.Add(tournament.id, ChallongeHttpHelper.GetTournamentMatches(tournament.id));
-                tournyIdParticipantDict.Add(tournament.id, ChallongeHttpHelper.GetTournamentParticipants(tournament.id));
+                tournyIdMatchDict.Add(tournament.id, ChallongeDataHelper.GetTournamentMatches(tournament.id));
+                tournyIdParticipantDict.Add(tournament.id, ChallongeDataHelper.GetTournamentParticipants(tournament.id));
             }
 
             sw.Stop();

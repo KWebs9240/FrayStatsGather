@@ -1,12 +1,13 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ChallongeApiHelper
+namespace ChallongeApiHelper.HttpHelper
 {
     public static partial class ChallongeHttpHelper
     {
@@ -16,6 +17,7 @@ namespace ChallongeApiHelper
         {
             challHttpClient = new HttpClient();
             challHttpClient.BaseAddress = new Uri("https://api.challonge.com/v1/");
+            setAuthorizationHeader(ConfigurationManager.AppSettings["ApiUsername"], ConfigurationManager.AppSettings["ApiPassword"]);
         }
 
         public static bool setAuthorizationHeader(string userName, string password)
@@ -43,6 +45,11 @@ namespace ChallongeApiHelper
             var httpContent = new StringContent(bodyJson, Encoding.UTF8, "application/json");
 
             return challHttpClient.PostAsync(route, httpContent).Result.Content.ReadAsStringAsync().Result;
+        }
+
+        private static bool CheckHeaders()
+        {
+            return challHttpClient.DefaultRequestHeaders.Contains("Authorization");
         }
     }
 }

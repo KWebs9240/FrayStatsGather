@@ -35,6 +35,7 @@
       <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -44,10 +45,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ChallongeHttpHelper.cs" />
-    <Compile Include="ChallongeHttpHelperParticipant.cs" />
-    <Compile Include="ChallongeHttpHelperMatch.cs" />
-    <Compile Include="ChallongeHttpHelperTournament.cs" />
+    <Compile Include="DataHelper\ChallongeDataHelperParticipant.cs" />
+    <Compile Include="DataHelper\ChallongeDataHelperMatch.cs" />
+    <Compile Include="DataHelper\ChallongeDataHelperTournament.cs" />
+    <Compile Include="HttpHelper\ChallongeHttpHelper.cs" />
+    <Compile Include="HttpHelper\ChallongeHttpHelperParticipant.cs" />
+    <Compile Include="HttpHelper\ChallongeHttpHelperMatch.cs" />
+    <Compile Include="HttpHelper\ChallongeHttpHelperTournament.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -59,5 +63,6 @@
       <Name>ChallongeEntities</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ChallongeApiHelper
+namespace ChallongeApiHelper.HttpHelper
 {
     public static partial class ChallongeHttpHelper
     {
