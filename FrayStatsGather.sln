@@ -17,6 +17,16 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoreStatsGather", "CoreStatsGather\CoreStatsGather.csproj", "{74DEC3D5-8B09-48DA-ACE8-F65560E87D2C}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DbItems", "DbItems", "{B7BF3F24-6AC2-448B-ACFA-CFB8BD1ED2AC}"
+	ProjectSection(SolutionItems) = preProject
+		DbItems\MATCH.sql = DbItems\MATCH.sql
+		DbItems\PARTICIPANT.sql = DbItems\PARTICIPANT.sql
+		DbItems\SET.sql = DbItems\SET.sql
+		DbItems\TOURNAMENT.sql = DbItems\TOURNAMENT.sql
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FrayStatsDbEntities", "FrayStatsEntities\FrayStatsDbEntities.csproj", "{08AEA734-FD9E-4160-B5E8-2C315D2A021D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +49,10 @@ Global
 		{74DEC3D5-8B09-48DA-ACE8-F65560E87D2C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{74DEC3D5-8B09-48DA-ACE8-F65560E87D2C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{74DEC3D5-8B09-48DA-ACE8-F65560E87D2C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{08AEA734-FD9E-4160-B5E8-2C315D2A021D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{08AEA734-FD9E-4160-B5E8-2C315D2A021D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{08AEA734-FD9E-4160-B5E8-2C315D2A021D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{08AEA734-FD9E-4160-B5E8-2C315D2A021D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

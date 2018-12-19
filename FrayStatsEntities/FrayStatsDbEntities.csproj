@@ -4,14 +4,14 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{57737269-EC6C-4CF8-A58B-DC58174D705A}</ProjectGuid>
+    <ProjectGuid>{08AEA734-FD9E-4160-B5E8-2C315D2A021D}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ChallongeApiHelper</RootNamespace>
-    <AssemblyName>ChallongeApiHelper</AssemblyName>
+    <RootNamespace>FrayStatsEntities</RootNamespace>
+    <AssemblyName>FrayStatsEntities</AssemblyName>
     <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <TargetFrameworkProfile />
+    <Deterministic>true</Deterministic>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -31,11 +31,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
-    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -45,25 +41,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DataHelper\ChallongeDataHelperParticipant.cs" />
-    <Compile Include="DataHelper\ChallongeDataHelperMatch.cs" />
-    <Compile Include="DataHelper\ChallongeDataHelperTournament.cs" />
-    <Compile Include="HttpHelper\ChallongeHttpHelper.cs" />
-    <Compile Include="HttpHelper\ChallongeHttpHelperParticipant.cs" />
-    <Compile Include="HttpHelper\ChallongeHttpHelperMatch.cs" />
-    <Compile Include="HttpHelper\ChallongeHttpHelperTournament.cs" />
+    <Compile Include="FrayDbMatch.cs" />
+    <Compile Include="FrayDbParticipant.cs" />
+    <Compile Include="FrayDbSet.cs" />
+    <Compile Include="FrayDbTournament.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SQLHelper\ChallongeSQLHelperTournament.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\ChallongeEntities\ChallongeEntities.csproj">
-      <Project>{8E5BBA13-67E9-4883-AB3F-540D99F1606D}</Project>
-      <Name>ChallongeEntities</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
