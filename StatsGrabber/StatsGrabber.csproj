@@ -69,6 +69,10 @@
       <Project>{74DEC3D5-8B09-48DA-ACE8-F65560E87D2C}</Project>
       <Name>CoreStatsGather</Name>
     </ProjectReference>
+    <ProjectReference Include="..\FrayStatsEntities\FrayStatsDbEntities.csproj">
+      <Project>{08AEA734-FD9E-4160-B5E8-2C315D2A021D}</Project>
+      <Name>FrayStatsDbEntities</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

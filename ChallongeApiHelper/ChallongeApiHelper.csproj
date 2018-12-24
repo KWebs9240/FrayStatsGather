@@ -53,6 +53,9 @@
     <Compile Include="HttpHelper\ChallongeHttpHelperMatch.cs" />
     <Compile Include="HttpHelper\ChallongeHttpHelperTournament.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SQLHelper\ChallongeSQLHelperSet.cs" />
+    <Compile Include="SQLHelper\ChallongeSQLHelperParticipant.cs" />
+    <Compile Include="SQLHelper\ChallongeSQLHelperMatch.cs" />
     <Compile Include="SQLHelper\ChallongeSQLHelperTournament.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -62,6 +65,10 @@
     <ProjectReference Include="..\ChallongeEntities\ChallongeEntities.csproj">
       <Project>{8E5BBA13-67E9-4883-AB3F-540D99F1606D}</Project>
       <Name>ChallongeEntities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FrayStatsEntities\FrayStatsDbEntities.csproj">
+      <Project>{08AEA734-FD9E-4160-B5E8-2C315D2A021D}</Project>
+      <Name>FrayStatsDbEntities</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />

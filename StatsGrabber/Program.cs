@@ -2,6 +2,7 @@
 using ChallongeApiHelper.DataHelper;
 using ChallongeEntities;
 using CoreStatsGather;
+using FrayStatsDbEntities;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -18,13 +19,14 @@ namespace StatsGrabber
     {
         static void Main(string[] args)
         {
-            TournamentRetrieval test = new TournamentRetrieval()
+            FrayDbTournament test = new FrayDbTournament()
             {
-                id = 1,
-                name = "Test Save Code"
+                TournamentId = 1,
+                TournamentName = "Test Save Code",
+                TournamentDt = DateTime.UtcNow
             };
 
-            ChallongeApiHelper.SQLHelper.ChallongeSQLHelperTournament.SqlSaveTournament(test);
+            ChallongeApiHelper.SQLHelper.ChallongeSQLHelper.SqlSaveTournament(test);
 
             //using (SqlConnection sqlConnection = new SqlConnection("Data Source=(LocalDB)\\LocalTesting;Initial Catalog=FrayData;Integrated Security=true;"))
             //{

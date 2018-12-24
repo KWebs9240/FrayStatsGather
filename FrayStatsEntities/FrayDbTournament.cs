@@ -10,7 +10,6 @@ namespace FrayStatsDbEntities
     {
         public int TournamentId { get; set; }
         public string TournamentName { get; set; }
-
-        public DateTime LastCheckDate { get; set; }
+        public DateTime TournamentDt { get; set; }
     }
 }

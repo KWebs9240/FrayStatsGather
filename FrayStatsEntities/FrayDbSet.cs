@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FrayStatsEntities
+namespace FrayStatsDbEntities
 {
     public class FrayDbSet
     {
@@ -12,7 +12,5 @@ namespace FrayStatsEntities
         public int SetNo { get; set; }
         public int Player1Score { get; set; }
         public int Player2Score { get; set; }
-
-        public DateTime LastCheckDate { get; set; }
     }
 }

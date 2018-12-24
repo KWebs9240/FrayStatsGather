@@ -4,13 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FrayStatsEntities
+namespace FrayStatsDbEntities
 {
     public class FrayDbParticipant
     {
-        public int ParticipantId { get; set; }
+        public long ParticipantId { get; set; }
         public string ChallongeUserName { get; set; }
-
-        public DateTime LastCheckDate { get; set; }
+        public string ParticipantName { get; set; }
     }
 }

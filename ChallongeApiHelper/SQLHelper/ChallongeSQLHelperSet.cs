@@ -11,21 +11,23 @@ namespace ChallongeApiHelper.SQLHelper
 {
     public static partial class ChallongeSQLHelper
     {
-        public static FrayDbTournament SqlSaveTournament(FrayDbTournament tournament)
+        public static FrayDbSet SqlSaveSet(FrayDbSet set)
         {
             using (SqlConnection sqlConnection = new SqlConnection("Data Source=(LocalDB)\\LocalTesting;Initial Catalog=FrayData;Integrated Security=true;"))
             {
-                SqlCommand cmd = new SqlCommand($@"INSERT INTO dbo.TOURNAMENT
+                SqlCommand cmd = new SqlCommand($@"INSERT INTO dbo.MATCH
                 (
-                    TOURNAMENT_ID,
-                    TOURNAMENT_NAME,
-                    TOURNAMENT_DT
+                    MATCH_ID,
+                    SET_NO,
+                    PLAYER1_SCORE,
+                    PLAYER2_SCORE
                 )
                 VALUES
                 (
-                    {tournament.TournamentId}, -- TOURNAMENT_ID - numeric(18, 0)
-                    N'{tournament.TournamentName}',   -- TOURNAMENT_NAME - nvarchar(50)
-                    '{tournament.TournamentDt.ToString()}'
+                    {set.MatchId},
+                    {set.SetNo},
+                    {set.Player1Score},
+                    {set.Player2Score}
                 )", sqlConnection);
 
                 sqlConnection.Open();
@@ -33,7 +35,7 @@ namespace ChallongeApiHelper.SQLHelper
                 cmd.ExecuteNonQuery();
             }
 
-            return tournament;
+            return set;
         }
     }
 }

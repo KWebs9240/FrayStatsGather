@@ -28,4 +28,11 @@
     <Property Name="ParentElementType" Value="SqlTable" />
     <Property Name="NewName" Value="TOURNAMENT_ID" />
   </Operation>
+  <Operation Name="Rename Refactor" Key="31c52567-89d9-4a50-943c-db2ffa630ffc" ChangeDateTime="12/24/2018 15:47:52">
+    <Property Name="ElementName" Value="[dbo].[FK_MATCH_ToTable]" />
+    <Property Name="ElementType" Value="SqlForeignKeyConstraint" />
+    <Property Name="ParentElementName" Value="[dbo].[MATCH]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="[FK_MATCH_TOURNAMENT_1]" />
+  </Operation>
 </Operations>
