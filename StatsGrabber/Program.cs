@@ -19,14 +19,14 @@ namespace StatsGrabber
     {
         static void Main(string[] args)
         {
-            FrayDbTournament test = new FrayDbTournament()
-            {
-                TournamentId = 1,
-                TournamentName = "Test Save Code",
-                TournamentDt = DateTime.UtcNow
-            };
+            //FrayDbTournament test = new FrayDbTournament()
+            //{
+            //    TournamentId = 1,
+            //    TournamentName = "Test Save Code",
+            //    TournamentDt = DateTime.UtcNow
+            //};
 
-            ChallongeApiHelper.SQLHelper.ChallongeSQLHelper.SqlSaveTournament(test);
+            //ChallongeApiHelper.SQLHelper.ChallongeSQLHelper.SqlSaveTournament(test);
 
             //using (SqlConnection sqlConnection = new SqlConnection("Data Source=(LocalDB)\\LocalTesting;Initial Catalog=FrayData;Integrated Security=true;"))
             //{
@@ -49,21 +49,20 @@ namespace StatsGrabber
             //Data Source=.\SQLExpress;User Instance=true;Integrated Security=true;AttachDbFilename=|DataDirectory|Database1.mdf;
             //Data Source=tcp:qbstest.database.windows.net;Initial Catalog=QA_QPA_QFC;User ID=shawncutter;Password=fr057bit3!!
 
-            //List<TournamentRetrieval> tournamentList = ChallongeDataHelper.GetAllTournaments();
+            List<TournamentRetrieval> tournamentList = ChallongeDataHelper.GetAllTournaments();
 
-            //Dictionary<int, List<MatchRetrieval>> tournyIdMatchDict = new Dictionary<int, List<MatchRetrieval>>();
-            //Dictionary<int, List<ParticipantRetrieval>> tournyIdParticipantDict = new Dictionary<int, List<ParticipantRetrieval>>();
+            TournamentRetrieval tournament = tournamentList.First();
+            List<MatchRetrieval> tournamentMatches = ChallongeDataHelper.GetTournamentMatches(tournament.id);
+            List<ParticipantRetrieval> tournamentParticipants = ChallongeDataHelper.GetTournamentParticipants(tournament.id);
 
-            //Stopwatch sw = new Stopwatch();
-            //sw.Start();
+            FrayDbTournament dbTournament = new FrayDbTournament()
+            {
+                TournamentName = tournament.name,
+                TournamentId = tournament.id,
+                TournamentDt = tournament.started_at.Value
+            };
 
-            //foreach(TournamentRetrieval tournament in tournamentList.Take(3))
-            //{
-            //    tournyIdMatchDict.Add(tournament.id, ChallongeDataHelper.GetTournamentMatches(tournament.id));
-            //    tournyIdParticipantDict.Add(tournament.id, ChallongeDataHelper.GetTournamentParticipants(tournament.id));
-            //}
 
-            //sw.Stop();
         }
     }
 }
