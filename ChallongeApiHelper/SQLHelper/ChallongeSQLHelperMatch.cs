@@ -15,7 +15,7 @@ namespace ChallongeApiHelper.SQLHelper
         {
             using (SqlConnection sqlConnection = new SqlConnection("Data Source=(LocalDB)\\LocalTesting;Initial Catalog=FrayData;Integrated Security=true;"))
             {
-                SqlCommand cmd = new SqlCommand($@"INSERT INTO dbo.MATCH
+                SqlCommand cmd = new SqlCommand(@"INSERT INTO dbo.MATCH
                 (
                     MATCH_ID,
                     WINNER_ID,
@@ -26,13 +26,20 @@ namespace ChallongeApiHelper.SQLHelper
                 )
                 VALUES
                 (
-                    {match.MatchId},
-                    {match.WinnerId},
-                    {match.LoserId},
-                    {match.Player1Id},
-                    {match.Player2Id},
-                    {match.TournamentId}
+                    @MatchId,
+                    @WinnerId,
+                    @LoserId,
+                    @Player1Id,
+                    @Player2Id,
+                    @TournamentId
                 )", sqlConnection);
+
+                cmd.Parameters.AddWithValue("@MatchId", match.MatchId);
+                cmd.Parameters.AddWithValue("@WinnerId", match.WinnerId);
+                cmd.Parameters.AddWithValue("@LoserId", match.LoserId);
+                cmd.Parameters.AddWithValue("@Player1Id", match.Player1Id);
+                cmd.Parameters.AddWithValue("@Player2Id", match.Player2Id);
+                cmd.Parameters.AddWithValue("@TournamentId", match.TournamentId);
 
                 sqlConnection.Open();
 

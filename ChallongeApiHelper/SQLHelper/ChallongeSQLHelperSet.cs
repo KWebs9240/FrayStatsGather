@@ -15,7 +15,7 @@ namespace ChallongeApiHelper.SQLHelper
         {
             using (SqlConnection sqlConnection = new SqlConnection("Data Source=(LocalDB)\\LocalTesting;Initial Catalog=FrayData;Integrated Security=true;"))
             {
-                SqlCommand cmd = new SqlCommand($@"INSERT INTO dbo.MATCH
+                SqlCommand cmd = new SqlCommand(@"INSERT INTO dbo.MATCH
                 (
                     MATCH_ID,
                     SET_NO,
@@ -24,11 +24,16 @@ namespace ChallongeApiHelper.SQLHelper
                 )
                 VALUES
                 (
-                    {set.MatchId},
-                    {set.SetNo},
-                    {set.Player1Score},
-                    {set.Player2Score}
+                    @MatchId,
+                    @SetNo,
+                    @Player1Score,
+                    @Player2Score
                 )", sqlConnection);
+
+                cmd.Parameters.AddWithValue("@MatchId", set.MatchId);
+                cmd.Parameters.AddWithValue("@SetNo", set.SetNo);
+                cmd.Parameters.AddWithValue("@Player1Score", set.Player1Score);
+                cmd.Parameters.AddWithValue("@Player2Score", set.Player2Score);
 
                 sqlConnection.Open();
 
