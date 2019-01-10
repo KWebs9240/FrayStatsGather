@@ -19,6 +19,8 @@ namespace StatsGrabber
     {
         static void Main(string[] args)
         {
+            //A quick nothing update to see if the Visual studio add-in is the reason my git profile never shows contributions
+
             //FrayDbTournament test = new FrayDbTournament()
             //{
             //    TournamentId = 1,
