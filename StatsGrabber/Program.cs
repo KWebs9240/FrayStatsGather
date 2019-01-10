@@ -19,6 +19,8 @@ namespace StatsGrabber
     {
         static void Main(string[] args)
         {
+            //Looks like it might have been some good ol git configs
+
             //FrayDbTournament test = new FrayDbTournament()
             //{
             //    TournamentId = 1,
