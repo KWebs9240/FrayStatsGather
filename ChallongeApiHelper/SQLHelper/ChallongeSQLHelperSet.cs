@@ -15,7 +15,7 @@ namespace ChallongeApiHelper.SQLHelper
         {
             using (SqlConnection sqlConnection = new SqlConnection("Data Source=(LocalDB)\\LocalTesting;Initial Catalog=FrayData;Integrated Security=true;"))
             {
-                SqlCommand cmd = new SqlCommand(@"INSERT INTO dbo.MATCH
+                SqlCommand cmd = new SqlCommand(@"INSERT INTO dbo.[SET]
                 (
                     MATCH_ID,
                     SET_NO,

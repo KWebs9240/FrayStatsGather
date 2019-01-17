@@ -41,19 +41,18 @@ namespace ChallongeApiHelper.SQLHelper
         {
             using (SqlConnection sqlConnection = new SqlConnection("Data Source=(LocalDB)\\LocalTesting;Initial Catalog=FrayData;Integrated Security=true;"))
             {
-                SqlCommand cmd = new SqlCommand(@"INSERT INTO dbo.MATCH
+                SqlCommand cmd = new SqlCommand(@"INSERT INTO dbo.PARTICIPANT
                 (
-                    CHALLONGE_USERNAME,
-                    NAME
+                    CHALLONGE_USERNAME
                 )
                 VALUES
                 (
-                    @ChallongeUserName,
-                    @ParticipantName
+                    @ChallongeUserName
                 )", sqlConnection);
 
                 cmd.Parameters.AddWithValue("@ChallongeUserName", participant.ChallongeUserName);
-                cmd.Parameters.AddWithValue("@ParticipantName", participant.ParticipantName);
+                //Gonna have to script this in manually since this is going to be bad about knowing actual names
+                //cmd.Parameters.AddWithValue("@ParticipantName", participant.ParticipantName);
 
                 sqlConnection.Open();
 
