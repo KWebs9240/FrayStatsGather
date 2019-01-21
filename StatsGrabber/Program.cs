@@ -22,75 +22,98 @@ namespace StatsGrabber
         {
             List<TournamentRetrieval> tournamentList = ChallongeDataHelper.GetAllTournaments();
 
-            TournamentRetrieval tournament = tournamentList.First();
-            List<MatchRetrieval> tournamentMatches = ChallongeDataHelper.GetTournamentMatches(tournament.id);
-            List<ParticipantRetrieval> tournamentParticipants = ChallongeDataHelper.GetTournamentParticipants(tournament.id);
-
-            FrayDbTournament dbTournament = new FrayDbTournament()
+            foreach (TournamentRetrieval tournament in tournamentList.Take(10))
             {
-                TournamentName = tournament.name,
-                TournamentId = tournament.id,
-                TournamentDt = tournament.started_at.Value
-            };
+                Console.WriteLine($"Currently importing {tournament.name}");
 
-            ChallongeSQLHelper.SqlSaveTournament(dbTournament);
+                List<MatchRetrieval> tournamentMatches = ChallongeDataHelper.GetTournamentMatches(tournament.id);
+                List<ParticipantRetrieval> tournamentParticipants = ChallongeDataHelper.GetTournamentParticipants(tournament.id);
 
-            foreach(ParticipantRetrieval retrievedParticipant in tournamentParticipants)
-            {
-                FrayDbParticipant newParticipant = new FrayDbParticipant()
+                FrayDbTournament dbTournament = new FrayDbTournament()
                 {
-                    ChallongeUserName = retrievedParticipant.challonge_username
+                    TournamentName = tournament.name,
+                    TournamentId = tournament.id,
+                    TournamentDt = tournament.started_at.Value
                 };
 
-                ChallongeSQLHelper.SqlSaveParticipant(newParticipant);
-            }
+                ChallongeSQLHelper.SqlSaveTournament(dbTournament);
 
-            List<FrayDbParticipant> allKnownParticipants = ChallongeSQLHelper.SqlGetParticipants();
+                List<FrayDbParticipant> existingParticipants = ChallongeSQLHelper.SqlGetParticipants();
+                HashSet<string> knownParticipants = new HashSet<string>(existingParticipants.Select(x => x.ChallongeUserName));
 
-            foreach (MatchRetrieval retrievedMatch in tournamentMatches)
-            {
-                FrayDbMatch newMatch = new FrayDbMatch();
-                newMatch.MatchId = retrievedMatch.id;
-
-                ParticipantRetrieval player1 = tournamentParticipants.First(x => x.id.Equals(retrievedMatch.player1_id));
-                FrayDbParticipant actuallyPlayer1 = allKnownParticipants.First(x => x.ChallongeUserName.Equals(player1.challonge_username));
-
-                ParticipantRetrieval player2 = tournamentParticipants.First(x => x.id.Equals(retrievedMatch.player2_id));
-                FrayDbParticipant actuallyPlayer2 = allKnownParticipants.First(x => x.ChallongeUserName.Equals(player2.challonge_username));
-
-                newMatch.Player1Id = Convert.ToInt32(actuallyPlayer1.ParticipantId);
-                newMatch.Player2Id = Convert.ToInt32(actuallyPlayer2.ParticipantId);
-
-                if(retrievedMatch.winner_id.Equals(player1.id))
+                foreach (ParticipantRetrieval retrievedParticipant in tournamentParticipants)
                 {
-                    newMatch.WinnerId = Convert.ToInt32(actuallyPlayer1.ParticipantId);
-                    newMatch.LoserId = Convert.ToInt32(actuallyPlayer2.ParticipantId);
-                }
-                else
-                {
-                    newMatch.WinnerId = Convert.ToInt32(actuallyPlayer2.ParticipantId);
-                    newMatch.LoserId = Convert.ToInt32(actuallyPlayer1.ParticipantId);
+                    if (string.IsNullOrEmpty(retrievedParticipant.challonge_username)) { retrievedParticipant.challonge_username = "Unknown"; }
+
+                    if (!knownParticipants.Contains(retrievedParticipant.challonge_username))
+                    {
+                        FrayDbParticipant newParticipant = new FrayDbParticipant()
+                        {
+                            ChallongeUserName = retrievedParticipant.challonge_username
+                        };
+
+                        ChallongeSQLHelper.SqlSaveParticipant(newParticipant);
+                    }
                 }
 
-                newMatch.TournamentId = tournament.id;
+                List<FrayDbParticipant> allKnownParticipants = ChallongeSQLHelper.SqlGetParticipants();
 
-                ChallongeSQLHelper.SqlSaveMatch(newMatch);
-
-                int currentSetNo = 0;
-
-                foreach(string set in retrievedMatch.scores_csv.Split(','))
+                foreach (MatchRetrieval retrievedMatch in tournamentMatches)
                 {
-                    currentSetNo++;
+                    FrayDbMatch newMatch = new FrayDbMatch();
+                    newMatch.MatchId = retrievedMatch.id;
 
-                    FrayDbSet newSet = new FrayDbSet();
-                    newSet.MatchId = retrievedMatch.id;
-                    newSet.SetNo = currentSetNo;
-                    var setScore = set.Split('-');
+                    ParticipantRetrieval player1 = tournamentParticipants.First(x => x.id.Equals(retrievedMatch.player1_id));
+                    FrayDbParticipant actuallyPlayer1 = allKnownParticipants.First(x => x.ChallongeUserName.Equals(player1.challonge_username));
 
-                    newSet.Player1Score = int.Parse(setScore[0]);
-                    newSet.Player2Score = int.Parse(setScore[1]);
+                    ParticipantRetrieval player2 = tournamentParticipants.First(x => x.id.Equals(retrievedMatch.player2_id));
+                    FrayDbParticipant actuallyPlayer2 = allKnownParticipants.First(x => x.ChallongeUserName.Equals(player2.challonge_username));
 
-                    ChallongeSQLHelper.SqlSaveSet(newSet);
+                    newMatch.Player1Id = Convert.ToInt32(actuallyPlayer1.ParticipantId);
+                    newMatch.Player2Id = Convert.ToInt32(actuallyPlayer2.ParticipantId);
+
+                    if (retrievedMatch.winner_id.Equals(player1.id))
+                    {
+                        newMatch.WinnerId = Convert.ToInt32(actuallyPlayer1.ParticipantId);
+                        newMatch.LoserId = Convert.ToInt32(actuallyPlayer2.ParticipantId);
+                    }
+                    else
+                    {
+                        newMatch.WinnerId = Convert.ToInt32(actuallyPlayer2.ParticipantId);
+                        newMatch.LoserId = Convert.ToInt32(actuallyPlayer1.ParticipantId);
+                    }
+
+                    newMatch.TournamentId = tournament.id;
+
+                    ChallongeSQLHelper.SqlSaveMatch(newMatch);
+
+                    int currentSetNo = 0;
+
+                    foreach (string set in retrievedMatch.scores_csv.Split(','))
+                    {
+                        currentSetNo++;
+
+                        FrayDbSet newSet = new FrayDbSet();
+                        newSet.MatchId = retrievedMatch.id;
+                        newSet.SetNo = currentSetNo;
+
+                        if (set.IndexOf('-') == 0)
+                        {
+                            int splitMarker = set.IndexOf('-', 1);
+
+                            newSet.Player1Score = int.Parse(set.Substring(0, splitMarker));
+                            newSet.Player2Score = int.Parse(set.Substring(splitMarker + 1));
+                        }
+                        else
+                        {
+                            int splitMarker = set.IndexOf('-');
+
+                            newSet.Player1Score = int.Parse(set.Substring(0, splitMarker));
+                            newSet.Player2Score = int.Parse(set.Substring(splitMarker + 1));
+                        }
+
+                        ChallongeSQLHelper.SqlSaveSet(newSet);
+                    }
                 }
             }
         }
