@@ -2,6 +2,7 @@
 using FrayStatsDbEntities;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
@@ -13,7 +14,7 @@ namespace ChallongeApiHelper.SQLHelper
     {
         public static FrayDbMatch SqlSaveMatch(FrayDbMatch match)
         {
-            using (SqlConnection sqlConnection = new SqlConnection("Data Source=(LocalDB)\\LocalTesting;Initial Catalog=FrayData;Integrated Security=true;"))
+            using (SqlConnection sqlConnection = new SqlConnection(ConfigurationManager.ConnectionStrings["dbConnection"].ConnectionString))
             {
                 SqlCommand cmd = new SqlCommand(@"INSERT INTO dbo.MATCH
                 (
