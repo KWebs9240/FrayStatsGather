@@ -22,7 +22,9 @@ namespace StatsGrabber
         {
             List<TournamentRetrieval> tournamentList = ChallongeDataHelper.GetAllTournaments();
 
-            foreach (TournamentRetrieval tournament in tournamentList.Take(10))
+            tournamentList = tournamentList.Where(x => x.started_at.HasValue).ToList();
+
+            foreach (TournamentRetrieval tournament in tournamentList)
             {
                 Console.WriteLine($"Currently importing {tournament.name}");
 
@@ -58,7 +60,7 @@ namespace StatsGrabber
 
                 List<FrayDbParticipant> allKnownParticipants = ChallongeSQLHelper.SqlGetParticipants();
 
-                foreach (MatchRetrieval retrievedMatch in tournamentMatches)
+                foreach (MatchRetrieval retrievedMatch in tournamentMatches.Where(x => x.winner_id.HasValue))
                 {
                     FrayDbMatch newMatch = new FrayDbMatch();
                     newMatch.MatchId = retrievedMatch.id;
