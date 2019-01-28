@@ -18,7 +18,7 @@ namespace ChallongeApiHelper.SQLHelper
 
             using (SqlConnection sqlConnection = new SqlConnection(ConfigurationManager.ConnectionStrings["dbConnection"].ConnectionString))
             {
-                SqlCommand cmd = new SqlCommand($@"SELECT * FROM PARTICIPANT", sqlConnection);
+                SqlCommand cmd = new SqlCommand($@"SELECT * FROM DB_PLAYER", sqlConnection);
                 sqlConnection.Open();
 
                 using (SqlDataReader reader = cmd.ExecuteReader())
@@ -26,7 +26,7 @@ namespace ChallongeApiHelper.SQLHelper
                     while (reader.Read())
                     {
                         FrayDbParticipant part = new FrayDbParticipant();
-                        part.ParticipantId = long.Parse(reader["PARTICIPANT_ID"].ToString());
+                        part.ParticipantId = long.Parse(reader["PLAYER_ID"].ToString());
                         part.ChallongeUserName = reader["CHALLONGE_USERNAME"].ToString();
                         part.ParticipantName = reader["NAME"].ToString();
 
@@ -42,7 +42,7 @@ namespace ChallongeApiHelper.SQLHelper
         {
             using (SqlConnection sqlConnection = new SqlConnection(ConfigurationManager.ConnectionStrings["dbConnection"].ConnectionString))
             {
-                SqlCommand cmd = new SqlCommand(@"INSERT INTO dbo.PARTICIPANT
+                SqlCommand cmd = new SqlCommand(@"INSERT INTO dbo.DB_PLAYER
                 (
                     CHALLONGE_USERNAME
                 )
