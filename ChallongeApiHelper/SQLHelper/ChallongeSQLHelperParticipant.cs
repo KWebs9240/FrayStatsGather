@@ -26,7 +26,7 @@ namespace ChallongeApiHelper.SQLHelper
                     while (reader.Read())
                     {
                         FrayDbParticipant part = new FrayDbParticipant();
-                        part.ParticipantId = long.Parse(reader["PARTICIPANT_ID"].ToString());
+                        part.ParticipantId = long.Parse(reader["PLAYER_ID"].ToString());
                         part.ChallongeUserName = reader["CHALLONGE_USERNAME"].ToString();
                         part.ParticipantName = reader["NAME"].ToString();
 

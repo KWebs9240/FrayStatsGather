@@ -23,7 +23,8 @@ namespace ChallongeApiHelper.SQLHelper
                     LOSER_ID,
                     PLAYER1_ID,
                     PLAYER2_ID,
-                    TOURNAMENT_ID
+                    TOURNAMENT_ID,
+                    MATCH_RANK
                 )
                 VALUES
                 (
@@ -32,7 +33,8 @@ namespace ChallongeApiHelper.SQLHelper
                     @LoserId,
                     @Player1Id,
                     @Player2Id,
-                    @TournamentId
+                    @TournamentId,
+                    @MatchRank
                 )", sqlConnection);
 
                 cmd.Parameters.AddWithValue("@MatchId", match.MatchId);
@@ -41,6 +43,7 @@ namespace ChallongeApiHelper.SQLHelper
                 cmd.Parameters.AddWithValue("@Player1Id", match.Player1Id);
                 cmd.Parameters.AddWithValue("@Player2Id", match.Player2Id);
                 cmd.Parameters.AddWithValue("@TournamentId", match.TournamentId);
+                cmd.Parameters.AddWithValue("@MatchRank", match.MatchRank);
 
                 sqlConnection.Open();
 
