@@ -18,7 +18,7 @@ namespace ChallongeApiHelper.SQLHelper
 
             using (SqlConnection sqlConnection = new SqlConnection(ConfigurationManager.ConnectionStrings["dbConnection"].ConnectionString))
             {
-                SqlCommand cmd = new SqlCommand($@"SELECT * FROM PARTICIPANT", sqlConnection);
+                SqlCommand cmd = new SqlCommand($@"SELECT * FROM DB_PLAYER", sqlConnection);
                 sqlConnection.Open();
 
                 using (SqlDataReader reader = cmd.ExecuteReader())
@@ -42,7 +42,7 @@ namespace ChallongeApiHelper.SQLHelper
         {
             using (SqlConnection sqlConnection = new SqlConnection(ConfigurationManager.ConnectionStrings["dbConnection"].ConnectionString))
             {
-                SqlCommand cmd = new SqlCommand(@"INSERT INTO dbo.PARTICIPANT
+                SqlCommand cmd = new SqlCommand(@"INSERT INTO dbo.DB_PLAYER
                 (
                     CHALLONGE_USERNAME
                 )

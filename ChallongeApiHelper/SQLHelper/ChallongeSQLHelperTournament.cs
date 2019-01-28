@@ -16,7 +16,7 @@ namespace ChallongeApiHelper.SQLHelper
         {
             using (SqlConnection sqlConnection = new SqlConnection(ConfigurationManager.ConnectionStrings["dbConnection"].ConnectionString))
             {
-                SqlCommand cmd = new SqlCommand(@"INSERT INTO dbo.TOURNAMENT
+                SqlCommand cmd = new SqlCommand(@"INSERT INTO dbo.DB_TOURNAMENT
                 (
                     TOURNAMENT_ID,
                     TOURNAMENT_NAME,

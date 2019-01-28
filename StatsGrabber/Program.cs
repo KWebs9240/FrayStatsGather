@@ -22,7 +22,7 @@ namespace StatsGrabber
         {
             List<TournamentRetrieval> tournamentList = ChallongeDataHelper.GetAllTournaments();
 
-            tournamentList = tournamentList.Where(x => x.started_at.HasValue).ToList();
+            tournamentList = tournamentList.Where(x => x.started_at.HasValue);
 
             foreach (TournamentRetrieval tournament in tournamentList)
             {
@@ -60,10 +60,15 @@ namespace StatsGrabber
 
                 List<FrayDbParticipant> allKnownParticipants = ChallongeSQLHelper.SqlGetParticipants();
 
+                int maxRank = tournamentMatches.Select(x => x.round).Max();
+
                 foreach (MatchRetrieval retrievedMatch in tournamentMatches.Where(x => x.winner_id.HasValue))
                 {
                     FrayDbMatch newMatch = new FrayDbMatch();
                     newMatch.MatchId = retrievedMatch.id;
+                    newMatch.MatchRank = retrievedMatch.round.Equals(0) 
+                        ? 100 
+                        : maxRank + 1 - retrievedMatch.round;
 
                     ParticipantRetrieval player1 = tournamentParticipants.First(x => x.id.Equals(retrievedMatch.player1_id));
                     FrayDbParticipant actuallyPlayer1 = allKnownParticipants.First(x => x.ChallongeUserName.Equals(player1.challonge_username));
