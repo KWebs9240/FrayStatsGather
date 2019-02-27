@@ -20,6 +20,8 @@ namespace StatsGrabber
     {
         static void Main(string[] args)
         {
+            ChallongeSQLHelper.ChallongeSQLHelperConnectionString = ConfigurationManager.ConnectionStrings["dbConnection"].ConnectionString;
+
             List<TournamentRetrieval> tournamentList = ChallongeDataHelper.GetAllTournaments();
 
             tournamentList = tournamentList.Where(x => x.started_at.HasValue).ToList();

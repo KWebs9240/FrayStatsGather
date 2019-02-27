@@ -17,6 +17,13 @@ namespace ChallongeApiHelper.HttpHelper
             return JsonConvert.DeserializeObject<List<TournamentHolderGarbage>>(getResponse).Select(x => x.tournament).ToList();
         }
 
+        public static List<TournamentRetrieval> GetRecentTournaments()
+        {
+            var getResponse = BasicGet($"tournaments.json?created_after={DateTime.UtcNow.AddMonths(-1).ToString("yyyy-MM-dd")}");
+
+            return JsonConvert.DeserializeObject<List<TournamentHolderGarbage>>(getResponse).Select(x => x.tournament).ToList();
+        }
+
         public static TournamentRetrieval PostNewTournament(TournamentCreation newTournament)
         {
             var postResponse = Post("tournaments.json", newTournament);

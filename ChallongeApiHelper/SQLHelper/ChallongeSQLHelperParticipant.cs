@@ -16,7 +16,7 @@ namespace ChallongeApiHelper.SQLHelper
         {
             List<FrayDbParticipant> rtnList = new List<FrayDbParticipant>();
 
-            using (SqlConnection sqlConnection = new SqlConnection(ConfigurationManager.ConnectionStrings["dbConnection"].ConnectionString))
+            using (SqlConnection sqlConnection = new SqlConnection(ChallongeSQLHelperConnectionString))
             {
                 SqlCommand cmd = new SqlCommand($@"SELECT * FROM DB_PLAYER", sqlConnection);
                 sqlConnection.Open();
@@ -40,7 +40,7 @@ namespace ChallongeApiHelper.SQLHelper
 
         public static FrayDbParticipant SqlSaveParticipant(FrayDbParticipant participant)
         {
-            using (SqlConnection sqlConnection = new SqlConnection(ConfigurationManager.ConnectionStrings["dbConnection"].ConnectionString))
+            using (SqlConnection sqlConnection = new SqlConnection(ChallongeSQLHelperConnectionString))
             {
                 SqlCommand cmd = new SqlCommand(@"INSERT INTO dbo.DB_PLAYER
                 (

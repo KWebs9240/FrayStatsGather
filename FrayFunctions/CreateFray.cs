@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using ChallongeEntities;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Host;
@@ -16,10 +17,13 @@ namespace FrayFunctions
             //Doing this way for now since the new version of the functions doesn't seem to play nice with the configuration manager
             ChallongeApiHelper.HttpHelper.ChallongeHttpHelper.setAuthorizationHeader(Environment.GetEnvironmentVariable("ApiUsername"), Environment.GetEnvironmentVariable("ApiPassword"));
 
+            ChallongeApiHelper.SQLHelper.ChallongeSQLHelper.ChallongeSQLHelperConnectionString = Environment.GetEnvironmentVariable("dbConnection");
+
+            int thisWeeksNum = ChallongeApiHelper.SQLHelper.ChallongeSQLHelper.GetCurrentWeek();
+
             TournamentCreation tournamentToCreate = new TournamentCreation()
             {
-                //name = $"QDAL Friday Fray - Week {weekNum.ToString()}",
-                name = "Kyle Test",
+                name = $"QDAL Friday Fray - Week {thisWeeksNum.ToString()}",
                 url = Guid.NewGuid().ToString().Replace("-", ""),
                 tournament_type = TournamentConstants.TournamentType.SingleElimination,
                 open_signup = true,
@@ -43,10 +47,10 @@ namespace FrayFunctions
                 game_id = TournamentConstants.GameId.PingPong
             };
 
-            var createdTournamnet = ChallongeApiHelper.HttpHelper.ChallongeHttpHelper.PostNewTournament(tournamentToCreate);
+            //var createdTournamnet = ChallongeApiHelper.HttpHelper.ChallongeHttpHelper.PostNewTournament(tournamentToCreate);
 
-            string signUpUrl = createdTournamnet.sign_up_url;
-            log.LogInformation($"Signup url is {signUpUrl}");
+            //string signUpUrl = createdTournamnet.sign_up_url;
+            //log.LogInformation($"Signup url is {signUpUrl}");
             //Email whoever cares
             //MailMessage mail = new MailMessage
             //{
@@ -67,7 +71,7 @@ namespace FrayFunctions
             //    UseDefaultCredentials = false,
             //    EnableSsl = true
             //};
-            //client.Credentials = new System.Net.NetworkCredential("thatoneemail", ConfigurationManager.AppSettings["EmailPassword"]);
+            //client.Credentials = new System.Net.NetworkCredential("ConfigurationManager.AppSettings["EmailAddress"]", ConfigurationManager.AppSettings["EmailPassword"]);
 
             //mail.Subject = "Ping Pong Email";
             //mail.IsBodyHtml = true;

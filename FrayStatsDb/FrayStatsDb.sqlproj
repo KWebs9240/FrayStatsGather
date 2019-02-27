@@ -66,6 +66,7 @@
     <Build Include="Table\DB_TOURNAMENT.sql" />
     <Build Include="Table\DB_MATCH.sql" />
     <Build Include="Sequence\SEQ_PLAYER_ID.sql" />
+    <Build Include="Table\DB_CURRENT_WEEK.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="FrayStatsDb.refactorlog" />
