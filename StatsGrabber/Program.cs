@@ -24,6 +24,8 @@ namespace StatsGrabber
 
             tournamentList = tournamentList.Where(x => x.started_at.HasValue).ToList();
 
+            tournamentList = tournamentList.Where(x => x.name.Contains("Week 49")).ToList();
+
             foreach (TournamentRetrieval tournament in tournamentList)
             {
                 Console.WriteLine($"Currently importing {tournament.name}");
