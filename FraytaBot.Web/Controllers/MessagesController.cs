@@ -8,7 +8,7 @@ using Microsoft.Bot.Connector;
 using Microsoft.Bot.Connector.Teams;
 using Microsoft.Bot.Connector.Teams.Models;
 
-namespace ShuffleNPull.Web.Controllers
+namespace FraytaBot.Web.Controllers
 {
     [BotAuthentication]
     public class MessagesController : ApiController
@@ -18,24 +18,18 @@ namespace ShuffleNPull.Web.Controllers
         {
             using (var connector = new ConnectorClient(new Uri(activity.ServiceUrl)))
             {
-                //if (activity.IsComposeExtensionQuery())
-                //{
-                //    var response = MessageExtension.HandleMessageExtensionQuery(connector, activity);
-                //    return response != null
-                //        ? Request.CreateResponse<ComposeExtensionResponse>(response)
-                //        : new HttpResponseMessage(HttpStatusCode.OK);
-                //}
-                //else
-                //{
-                    await TestAlive(connector, activity);
-                    return new HttpResponseMessage(HttpStatusCode.Accepted);
-                //}
+                await TestAlive(connector, activity);
+                return new HttpResponseMessage(HttpStatusCode.Accepted);
             }
         }
 
         public static async Task TestAlive(ConnectorClient connector, Activity activity)
         {
-            Activity reply = activity.CreateReply("Testing Alive");
+            var channelThing = activity.GetChannelData<TeamsChannelData>();
+
+            //Not going to be able to tag a team or channel until this is potenitally fixed
+            //https://github.com/OfficeDev/BotBuilder-MicrosoftTeams/issues/139
+            Activity reply = activity.CreateReply($"Testing Alive");
 
             await connector.Conversations.ReplyToActivityWithRetriesAsync(reply);
         }
