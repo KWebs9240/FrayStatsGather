@@ -47,39 +47,7 @@ namespace FrayFunctions
                 game_id = TournamentConstants.GameId.PingPong
             };
 
-            //var createdTournamnet = ChallongeApiHelper.HttpHelper.ChallongeHttpHelper.PostNewTournament(tournamentToCreate);
-
-            //string signUpUrl = createdTournamnet.sign_up_url;
-            //log.LogInformation($"Signup url is {signUpUrl}");
-            //Email whoever cares
-            //MailMessage mail = new MailMessage
-            //{
-            //    From = new MailAddress("weeklypingpong@gmail.com")
-            //};
-
-            //string[] emailRecipients = ConfigurationManager.AppSettings["EmailList"].Split(';');
-
-            //foreach (var recipient in emailRecipients)
-            //{
-            //    mail.To.Add(recipient);
-            //}
-
-            //SmtpClient client = new SmtpClient("smtp.gmail.com")
-            //{
-            //    Port = 587,
-            //    DeliveryMethod = SmtpDeliveryMethod.Network,
-            //    UseDefaultCredentials = false,
-            //    EnableSsl = true
-            //};
-            //client.Credentials = new System.Net.NetworkCredential("ConfigurationManager.AppSettings["EmailAddress"]", ConfigurationManager.AppSettings["EmailPassword"]);
-
-            //mail.Subject = "Ping Pong Email";
-            //mail.IsBodyHtml = true;
-            //mail.Body = $"Tournament Created - QDAL Friday Fray - Week {weekNum.ToString()} <br /> Signup Link: {signUpUrl}";
-
-            //client.Send(mail);
-
-            log.LogInformation("Weekly tournament scheduler succesfully, sent emails!");
+            log.LogInformation("Weekly tournament scheduled succesfully");
         }
     }
 }
