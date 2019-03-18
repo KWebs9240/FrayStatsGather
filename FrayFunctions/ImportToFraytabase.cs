@@ -14,7 +14,7 @@ namespace FrayFunctions
     public static class ImportToFraytabase
     {
         [FunctionName("ImportToFraytabase")]
-        public static void Run([TimerTrigger("0 */5 * * * *")]TimerInfo myTimer, ILogger log)
+        public static void Run([TimerTrigger("0 * * * * *")]TimerInfo myTimer, ILogger log)
         {
             log.LogInformation($"C# Timer trigger function executed at: {DateTime.Now}");
 
@@ -25,11 +25,11 @@ namespace FrayFunctions
 
             List<TournamentRetrieval> tournamentList = ChallongeApiHelper.HttpHelper.ChallongeHttpHelper.GetRecentTournaments();
 
-            int currentWeekNum = ChallongeSQLHelper.GetCurrentWeek();
+            FrayDbCurrentWeek currentWeekInfo = ChallongeSQLHelper.GetCurrentWeekInfo();
 
             tournamentList = tournamentList
                 .Where(x => x.started_at.HasValue)
-                .Where(x => x.name.Contains($"Week {currentWeekNum.ToString()}"))
+                .Where(x => x.name.Contains($"Week {currentWeekInfo.CurrentWeekNum.ToString()}"))
                 .ToList();
 
             foreach (TournamentRetrieval tournament in tournamentList)
@@ -131,6 +131,8 @@ namespace FrayFunctions
                     }
                 }
             }
+
+            ChallongeSQLHelper.ProgressToWeekNum(currentWeekInfo.CurrentWeekNum + 1);
         }
     }
 }

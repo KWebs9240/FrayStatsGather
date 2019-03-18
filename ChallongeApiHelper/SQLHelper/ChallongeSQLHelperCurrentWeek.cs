@@ -12,9 +12,9 @@ namespace ChallongeApiHelper.SQLHelper
 {
     public static partial class ChallongeSQLHelper
     {
-        public static int GetCurrentWeek()
+        public static FrayDbCurrentWeek GetCurrentWeekInfo()
         {
-            int rtnItem = -1;
+            var rtnItem = new FrayDbCurrentWeek();
 
             using (SqlConnection sqlConnection = new SqlConnection(ChallongeSQLHelperConnectionString))
             {
@@ -25,12 +25,50 @@ namespace ChallongeApiHelper.SQLHelper
                 {
                     while (reader.Read())
                     {
-                        rtnItem = int.Parse(reader["CURRENT_WEEK_NUM"].ToString());
+                        rtnItem.CurrentWeekNum = int.Parse(reader["CURRENT_WEEK_NUM"].ToString());
+                        rtnItem.SignupUrl = reader["SIGNUP_URL"].ToString();
                     }
                 }
             }
 
             return rtnItem;
+        }
+
+        public static bool SetCurrentSignupUrl(string newUrl)
+        {
+            using (SqlConnection sqlConnection = new SqlConnection(ChallongeSQLHelperConnectionString))
+            {
+                SqlCommand cmd = new SqlCommand(@"UPDATE dbo.DB_CURRENT_WEEK SET
+                SIGNUP_URL = @newUrl
+                ", sqlConnection);
+
+                cmd.Parameters.AddWithValue("@newUrl", newUrl);
+
+                sqlConnection.Open();
+
+                cmd.ExecuteNonQuery();
+            }
+
+            return true;
+        }
+
+        public static bool ProgressToWeekNum(int weekNum)
+        {
+            using (SqlConnection sqlConnection = new SqlConnection(ChallongeSQLHelperConnectionString))
+            {
+                SqlCommand cmd = new SqlCommand(@"UPDATE dbo.DB_CURRENT_WEEK SET
+                CURRENT_WEEK_NUM = @weekNum,
+                SIGNUP_URL = NULL
+                ", sqlConnection);
+
+                cmd.Parameters.AddWithValue("@weekNum", weekNum);
+
+                sqlConnection.Open();
+
+                cmd.ExecuteNonQuery();
+            }
+
+            return true;
         }
     }
 }

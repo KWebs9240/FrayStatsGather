@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
+using ChallongeApiHelper.SQLHelper;
 using ChallongeEntities;
+using FrayStatsDbEntities;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Host;
 using Microsoft.Extensions.Logging;
@@ -19,11 +21,11 @@ namespace FrayFunctions
 
             ChallongeApiHelper.SQLHelper.ChallongeSQLHelper.ChallongeSQLHelperConnectionString = Environment.GetEnvironmentVariable("dbConnection");
 
-            int thisWeeksNum = ChallongeApiHelper.SQLHelper.ChallongeSQLHelper.GetCurrentWeek();
+            FrayDbCurrentWeek currentWeekInfo = ChallongeApiHelper.SQLHelper.ChallongeSQLHelper.GetCurrentWeekInfo();
 
             TournamentCreation tournamentToCreate = new TournamentCreation()
             {
-                name = $"QDAL Friday Fray - Week {thisWeeksNum.ToString()}",
+                name = $"QDAL Friday Fray - Week {currentWeekInfo.CurrentWeekNum.ToString()}",
                 url = Guid.NewGuid().ToString().Replace("-", ""),
                 tournament_type = TournamentConstants.TournamentType.SingleElimination,
                 open_signup = true,
@@ -46,6 +48,10 @@ namespace FrayFunctions
                 prediction_method = TournamentConstants.PredictionMethod.Exponential,
                 game_id = TournamentConstants.GameId.PingPong
             };
+
+            var createdTournamnet = ChallongeApiHelper.HttpHelper.ChallongeHttpHelper.PostNewTournament(tournamentToCreate);
+
+            ChallongeSQLHelper.SetCurrentSignupUrl(createdTournamnet.sign_up_url);
 
             log.LogInformation("Weekly tournament scheduled succesfully");
         }
