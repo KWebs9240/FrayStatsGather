@@ -14,7 +14,7 @@ namespace FrayFunctions
     public static class ImportToFraytabase
     {
         [FunctionName("ImportToFraytabase")]
-        public static void Run([TimerTrigger("0 * * * * *")]TimerInfo myTimer, ILogger log)
+        public static void Run([TimerTrigger("0 * * * * *"), Disable()]TimerInfo myTimer, ILogger log)
         {
             log.LogInformation($"C# Timer trigger function executed at: {DateTime.Now}");
 

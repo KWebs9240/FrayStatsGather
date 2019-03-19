@@ -6,6 +6,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
 using ChallongeEntities;
+using FrataBot.Web.Controllers.TeamsMsgHandlers;
 using Microsoft.Bot.Connector;
 using Microsoft.Bot.Connector.Teams;
 using Microsoft.Bot.Connector.Teams.Models;
@@ -20,10 +21,22 @@ namespace FraytaBot.Web.Controllers
         {
             using (var connector = new ConnectorClient(new Uri(activity.ServiceUrl)))
             {
-                await TestAlive(connector, activity);
+                foreach(ITeamsMsgHandler hand in _handlerList)
+                {
+                    if(hand.MessageTrigger(activity))
+                    {
+                        await hand.HandleMessage(connector, activity);
+                    }
+                }
+                //await TestAlive(connector, activity);
                 return new HttpResponseMessage(HttpStatusCode.Accepted);
             }
         }
+
+        private static List<ITeamsMsgHandler> _handlerList = new List<ITeamsMsgHandler>()
+        {
+            new AddChannelMsgHandler()
+        };
 
         public static async Task TestAlive(ConnectorClient connector, Activity activity)
         {

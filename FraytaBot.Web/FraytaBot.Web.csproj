@@ -135,6 +135,8 @@
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\MessagesController.cs" />
+    <Compile Include="Controllers\TeamsMsgHandlers\AddChannelMsgHandler.cs" />
+    <Compile Include="Controllers\TeamsMsgHandlers\ITeamsMsgHandler.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -163,6 +165,10 @@
     <ProjectReference Include="..\ChallongeEntities\ChallongeEntities.csproj">
       <Project>{8E5BBA13-67E9-4883-AB3F-540D99F1606D}</Project>
       <Name>ChallongeEntities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FrayStatsEntities\FrayStatsDbEntities.csproj">
+      <Project>{08AEA734-FD9E-4160-B5E8-2C315D2A021D}</Project>
+      <Name>FrayStatsDbEntities</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
