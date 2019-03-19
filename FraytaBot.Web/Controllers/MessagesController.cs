@@ -23,9 +23,16 @@ namespace FraytaBot.Web.Controllers
             {
                 foreach(ITeamsMsgHandler hand in _handlerList)
                 {
-                    if(hand.MessageTrigger(activity))
+                    try
                     {
-                        await hand.HandleMessage(connector, activity);
+                        if (hand.MessageTrigger(activity))
+                        {
+                            await hand.HandleMessage(connector, activity);
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        await YouBrokeIt(connector, activity, ex);
                     }
                 }
                 //await TestAlive(connector, activity);
@@ -38,34 +45,12 @@ namespace FraytaBot.Web.Controllers
             new AddChannelMsgHandler()
         };
 
-        public static async Task TestAlive(ConnectorClient connector, Activity activity)
+        public static async Task YouBrokeIt(ConnectorClient connector, Activity activity, Exception ex)
         {
-            try
-            {
-                if(!activity.Type.Equals("message"))
-                {
-                    return;
-                }
+            Activity reply = activity.CreateReply(ex.Message);
+            reply.Text += $"\n\n{ex.StackTrace}";
 
-                List<TournamentRetrieval> recentTournaments = ChallongeApiHelper.HttpHelper.ChallongeHttpHelper.GetRecentTournaments();
-
-                var final = recentTournaments.Last();
-
-                var channelThing = activity.GetChannelData<TeamsChannelData>();
-
-                //Not going to be able to tag a team or channel until this is potenitally fixed
-                //https://github.com/OfficeDev/BotBuilder-MicrosoftTeams/issues/139
-                Activity reply = activity.CreateReply($"The most recent tournament I probably found is\n\n[Cash Money]({final.sign_up_url}) ");
-
-                
-                await connector.Conversations.ReplyToActivityWithRetriesAsync(reply);
-            }
-            catch(Exception ex)
-            {
-                Activity reply = activity.CreateReply(ex.Message);
-
-                await connector.Conversations.ReplyToActivityWithRetriesAsync(reply);
-            }
+            await connector.Conversations.ReplyToActivityWithRetriesAsync(reply);
         }
     }
 }

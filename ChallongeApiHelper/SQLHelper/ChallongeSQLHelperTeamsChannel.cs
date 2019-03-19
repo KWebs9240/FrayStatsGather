@@ -16,7 +16,7 @@ namespace ChallongeApiHelper.SQLHelper
         {
             FrayDbTeamsChannel rtnItem = null;
 
-            using (SqlConnection sqlConnection = new SqlConnection(ConfigurationManager.ConnectionStrings["dbConnection"].ConnectionString))
+            using (SqlConnection sqlConnection = new SqlConnection(ChallongeSQLHelperConnectionString))
             {
                 SqlCommand cmd = new SqlCommand(@"SELECT * FROM dbo.DB_TEAMS_CHANNEL 
                     WHERE CHANNEL_ID = @ChannelId 

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
@@ -16,6 +17,7 @@ namespace FrataBot.Web.Controllers.TeamsMsgHandlers
         public async Task HandleMessage(ConnectorClient connector, Activity activity)
         {
             bool rejected = true;
+            ChallongeSQLHelper.ChallongeSQLHelperConnectionString = ConfigurationManager.AppSettings["dbConnection"];
             var channelThing = activity.GetChannelData<TeamsChannelData>();
 
             FrayDbTeamsTeam existingTeam = ChallongeSQLHelper.SqlGetSingleTeam(channelThing.Team.Id);
