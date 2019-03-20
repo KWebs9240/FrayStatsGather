@@ -135,6 +135,8 @@
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\MessagesController.cs" />
+    <Compile Include="Controllers\TeamsMsgHandlers\ThomasQuestionableMsgHandler.cs" />
+    <Compile Include="Controllers\TeamsMsgHandlers\MeQuestionableMsgHandler.cs" />
     <Compile Include="Controllers\TeamsMsgHandlers\GetServiceUrlMsgHandler.cs" />
     <Compile Include="Controllers\TeamsMsgHandlers\AddChannelMsgHandler.cs" />
     <Compile Include="Controllers\TeamsMsgHandlers\ITeamsMsgHandler.cs" />
