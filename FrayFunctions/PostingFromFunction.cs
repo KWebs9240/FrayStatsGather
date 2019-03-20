@@ -14,11 +14,13 @@ namespace FrayFunctions
     public static class PostingFromFunction
     {
         [FunctionName("PostingFromFunction")]
-        public static async void Run([TimerTrigger("0 * * * * *")]TimerInfo myTimer, ILogger log)
+        public static async void Run([TimerTrigger("0 0 14-20 * * *")]TimerInfo myTimer, ILogger log)
         {
+            ChallongeSQLHelper.ChallongeSQLHelperConnectionString = Environment.GetEnvironmentVariable("dbConnection");
+            FrayDbCurrentWeek currentInfo = ChallongeSQLHelper.GetCurrentWeekInfo();
             var postyBoi = Activity.CreateMessageActivity();
 
-            postyBoi.Text = "Text from message";
+            postyBoi.Text = $"Current signup link\n\n[Drop it like it's hot]({currentInfo.SignupUrl})";
 
             foreach (FrayDbTeamsChannel chan in ChallongeSQLHelper.SqlGetPostChannels())
             {

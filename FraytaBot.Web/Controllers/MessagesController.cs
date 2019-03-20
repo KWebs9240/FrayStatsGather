@@ -42,7 +42,8 @@ namespace FraytaBot.Web.Controllers
 
         private static List<ITeamsMsgHandler> _handlerList = new List<ITeamsMsgHandler>()
         {
-            new AddChannelMsgHandler()
+            new AddChannelMsgHandler(),
+            new GetServiceUrlMsgHandler()
         };
 
         public static async Task YouBrokeIt(ConnectorClient connector, Activity activity, Exception ex)

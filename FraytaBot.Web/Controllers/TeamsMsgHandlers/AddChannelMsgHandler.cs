@@ -86,8 +86,12 @@ namespace FrataBot.Web.Controllers.TeamsMsgHandlers
 
         public bool MessageTrigger(Activity activity)
         {
-            return activity.GetTextWithoutMentions().ToLower().Equals("over here")
-                && activity.Type.Equals("message");
+            if(activity.Type.Equals("message"))
+            {
+                return activity.GetTextWithoutMentions().ToLower().Equals("over here");
+            }
+
+            return false;
         }
     }
 }
