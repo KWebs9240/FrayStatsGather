@@ -32,5 +32,17 @@ namespace ChallongeEntities
             public static string SingleMatch = "single match";
             public static string Skip = "skip";
         }
+
+        public class PredictionMethod
+        {
+            public static int Default = 0;
+            public static int Exponential = 1;
+            public static int Linear = 2;
+        }
+
+        public class GameId
+        {
+            public static int PingPong = 600;
+        }
     }
 }

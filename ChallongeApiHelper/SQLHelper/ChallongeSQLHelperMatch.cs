@@ -14,7 +14,7 @@ namespace ChallongeApiHelper.SQLHelper
     {
         public static FrayDbMatch SqlSaveMatch(FrayDbMatch match)
         {
-            using (SqlConnection sqlConnection = new SqlConnection(ConfigurationManager.ConnectionStrings["dbConnection"].ConnectionString))
+            using (SqlConnection sqlConnection = new SqlConnection(ChallongeSQLHelperConnectionString))
             {
                 SqlCommand cmd = new SqlCommand(@"INSERT INTO dbo.DB_MATCH
                 (

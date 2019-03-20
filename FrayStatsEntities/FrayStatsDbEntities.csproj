@@ -42,6 +42,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="FrayDbMatch.cs" />
+    <Compile Include="FrayDbCurrentWeek.cs" />
+    <Compile Include="FrayDbTeamsChannel.cs" />
+    <Compile Include="FrayDbTeamsTeam.cs" />
     <Compile Include="FrayDbParticipant.cs" />
     <Compile Include="FrayDbSet.cs" />
     <Compile Include="FrayDbTournament.cs" />

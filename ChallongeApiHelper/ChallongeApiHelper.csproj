@@ -53,6 +53,10 @@
     <Compile Include="HttpHelper\ChallongeHttpHelperMatch.cs" />
     <Compile Include="HttpHelper\ChallongeHttpHelperTournament.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SQLHelper\ChallongeSQLHelper.cs" />
+    <Compile Include="SQLHelper\ChallongeSQLHelperCurrentWeek.cs" />
+    <Compile Include="SQLHelper\ChallongeSQLHelperTeamsChannel.cs" />
+    <Compile Include="SQLHelper\ChallongeSQLHelperTeamsTeam.cs" />
     <Compile Include="SQLHelper\ChallongeSQLHelperSet.cs" />
     <Compile Include="SQLHelper\ChallongeSQLHelperParticipant.cs" />
     <Compile Include="SQLHelper\ChallongeSQLHelperMatch.cs" />

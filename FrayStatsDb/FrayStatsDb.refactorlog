@@ -35,4 +35,11 @@
     <Property Name="ParentElementType" Value="SqlTable" />
     <Property Name="NewName" Value="[FK_MATCH_TOURNAMENT_1]" />
   </Operation>
+  <Operation Name="Rename Refactor" Key="90e8cd2b-450f-4c21-9ac9-173ea8ea8845" ChangeDateTime="02/27/2019 05:42:51">
+    <Property Name="ElementName" Value="[dbo].[DB_CURRENT_WEEK].[Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[DB_CURRENT_WEEK]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="CURRENT_WEEK_NUM" />
+  </Operation>
 </Operations>

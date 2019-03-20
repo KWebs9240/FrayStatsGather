@@ -1,32 +1,36 @@
-﻿using ChallongeApiHelper;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using ChallongeApiHelper.DataHelper;
 using ChallongeApiHelper.SQLHelper;
 using ChallongeEntities;
-using CoreStatsGather;
 using FrayStatsDbEntities;
-using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data.SqlClient;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Microsoft.Azure.WebJobs;
+using Microsoft.Azure.WebJobs.Host;
+using Microsoft.Extensions.Logging;
 
-namespace StatsGrabber
+namespace FrayFunctions
 {
-    class Program
+    public static class ImportToFraytabase
     {
-        static void Main(string[] args)
+        [FunctionName("ImportToFraytabase")]
+        public static void Run([TimerTrigger("0 * * * * *"), Disable()]TimerInfo myTimer, ILogger log)
         {
-            ChallongeSQLHelper.ChallongeSQLHelperConnectionString = ConfigurationManager.ConnectionStrings["dbConnection"].ConnectionString;
+            log.LogInformation($"C# Timer trigger function executed at: {DateTime.Now}");
 
-            List<TournamentRetrieval> tournamentList = ChallongeDataHelper.GetAllTournaments();
+            //Doing this way for now since the new version of the functions doesn't seem to play nice with the configuration manager
+            ChallongeApiHelper.HttpHelper.ChallongeHttpHelper.setAuthorizationHeader(Environment.GetEnvironmentVariable("ApiUsername"), Environment.GetEnvironmentVariable("ApiPassword"));
 
-            tournamentList = tournamentList.Where(x => x.started_at.HasValue).ToList();
+            ChallongeSQLHelper.ChallongeSQLHelperConnectionString = Environment.GetEnvironmentVariable("dbConnection");
 
-            tournamentList = tournamentList.Where(x => x.name.Contains("Week 52")).ToList();
+            List<TournamentRetrieval> tournamentList = ChallongeApiHelper.HttpHelper.ChallongeHttpHelper.GetRecentTournaments();
+
+            FrayDbCurrentWeek currentWeekInfo = ChallongeSQLHelper.GetCurrentWeekInfo();
+
+            tournamentList = tournamentList
+                .Where(x => x.started_at.HasValue)
+                .Where(x => x.name.Contains($"Week {currentWeekInfo.CurrentWeekNum.ToString()}"))
+                .ToList();
 
             foreach (TournamentRetrieval tournament in tournamentList)
             {
@@ -70,8 +74,8 @@ namespace StatsGrabber
                 {
                     FrayDbMatch newMatch = new FrayDbMatch();
                     newMatch.MatchId = retrievedMatch.id;
-                    newMatch.MatchRank = retrievedMatch.round.Equals(0) 
-                        ? 100 
+                    newMatch.MatchRank = retrievedMatch.round.Equals(0)
+                        ? 100
                         : maxRank + 1 - retrievedMatch.round;
 
                     ParticipantRetrieval player1 = tournamentParticipants.First(x => x.id.Equals(retrievedMatch.player1_id));
@@ -127,6 +131,8 @@ namespace StatsGrabber
                     }
                 }
             }
+
+            ChallongeSQLHelper.ProgressToWeekNum(currentWeekInfo.CurrentWeekNum + 1);
         }
     }
 }

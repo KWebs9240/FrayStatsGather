@@ -14,7 +14,7 @@ namespace ChallongeApiHelper.SQLHelper
     {
         public static FrayDbSet SqlSaveSet(FrayDbSet set)
         {
-            using (SqlConnection sqlConnection = new SqlConnection(ConfigurationManager.ConnectionStrings["dbConnection"].ConnectionString))
+            using (SqlConnection sqlConnection = new SqlConnection(ChallongeSQLHelperConnectionString))
             {
                 SqlCommand cmd = new SqlCommand(@"INSERT INTO dbo.[DB_SET]
                 (

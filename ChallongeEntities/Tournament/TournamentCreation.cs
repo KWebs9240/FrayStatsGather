@@ -37,5 +37,7 @@ namespace ChallongeEntities
         public DateTime? start_at { get; set; }
         public int? check_in_duration { get; set; }
         public string grand_finals_modifier { get; set; }
+        public int? prediction_method { get; set; }
+        public int? game_id { get; set; }
     }
 }
