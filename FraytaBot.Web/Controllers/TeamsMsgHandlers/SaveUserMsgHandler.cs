@@ -12,7 +12,7 @@ using Microsoft.Bot.Connector.Teams.Models;
 
 namespace FrataBot.Web.Controllers.TeamsMsgHandlers
 {
-    public class SaveUuserMsgHandler : ITeamsMsgHandler
+    public class SaveUserMsgHandler : ITeamsMsgHandler
     {
         public async Task HandleMessage(ConnectorClient connector, Activity activity)
         {

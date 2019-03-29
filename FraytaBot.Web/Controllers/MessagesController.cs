@@ -44,6 +44,7 @@ namespace FraytaBot.Web.Controllers
         {
             new AddChannelMsgHandler(),
             new GetServiceUrlMsgHandler(),
+            new SaveUserMsgHandler(),
             new ThomasQuestionableMsgHandler()
         };
 
