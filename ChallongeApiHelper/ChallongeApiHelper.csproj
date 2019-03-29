@@ -56,6 +56,7 @@
     <Compile Include="SQLHelper\ChallongeSQLHelper.cs" />
     <Compile Include="SQLHelper\ChallongeSQLHelperCurrentWeek.cs" />
     <Compile Include="SQLHelper\ChallongeSQLHelperTeamsChannel.cs" />
+    <Compile Include="SQLHelper\ChallongeSQLHelperTeamsUser.cs" />
     <Compile Include="SQLHelper\ChallongeSQLHelperTeamsTeam.cs" />
     <Compile Include="SQLHelper\ChallongeSQLHelperSet.cs" />
     <Compile Include="SQLHelper\ChallongeSQLHelperParticipant.cs" />

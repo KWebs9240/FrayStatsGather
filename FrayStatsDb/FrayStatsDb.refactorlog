@@ -42,4 +42,39 @@
     <Property Name="ParentElementType" Value="SqlTable" />
     <Property Name="NewName" Value="CURRENT_WEEK_NUM" />
   </Operation>
+  <Operation Name="Rename Refactor" Key="4e5c386b-4795-49ae-a365-8eac6f4fc36f" ChangeDateTime="03/22/2019 18:21:29">
+    <Property Name="ElementName" Value="[dbo].[DB_TEAMS_CHANNEL].[TEAM_ID]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[DB_TEAMS_CHANNEL]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="TEAMS_USER_ID" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="b73237c3-b626-45c7-afc1-512cdb2556f1" ChangeDateTime="03/22/2019 18:21:40">
+    <Property Name="ElementName" Value="[dbo].[DB_TEAMS_CHANNEL].[TEAMS_USER_ID]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[DB_TEAMS_CHANNEL]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="USER_ID" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="7d865199-7627-47e0-b49b-093f59fe050a" ChangeDateTime="03/22/2019 18:21:48">
+    <Property Name="ElementName" Value="[dbo].[DB_TEAMS_CHANNEL].[CHANNEL_ID]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[DB_TEAMS_CHANNEL]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="USER_NAME" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="940afcbc-ef3f-46d1-9a55-ba127a5d1ad4" ChangeDateTime="03/22/2019 18:21:55">
+    <Property Name="ElementName" Value="[dbo].[DB_TEAMS_CHANNEL].[CHANNEL_NAME]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[DB_TEAMS_CHANNEL]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="IS_TAG" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="2d54b562-54af-442b-bbfa-de6ae6f16122" ChangeDateTime="03/22/2019 18:22:08">
+    <Property Name="ElementName" Value="[dbo].[DB_TEAMS_CHANNEL].[IS_POST]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[DB_TEAMS_CHANNEL]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="IS_TAG" />
+  </Operation>
 </Operations>

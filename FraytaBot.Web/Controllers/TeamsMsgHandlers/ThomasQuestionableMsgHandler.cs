@@ -16,7 +16,7 @@ namespace FrataBot.Web.Controllers.TeamsMsgHandlers
     {
         public async Task HandleMessage(ConnectorClient connector, Activity activity)
         {
-            Activity reply = activity.CreateReply("Should I make it look like an accident or send a message?");
+            Activity reply = activity.CreateReply("Sir... I'm going to need you to settle down");
 
             await connector.Conversations.ReplyToActivityWithRetriesAsync(reply);
         }
