@@ -40,6 +40,34 @@ namespace ChallongeApiHelper.SQLHelper
             return rtnItem;
         }
 
+        public static List<FrayDbTeamsUser> SqlGetTagUsers()
+        {
+            List<FrayDbTeamsUser> rtnList = new List<FrayDbTeamsUser>();
+
+            using (SqlConnection sqlConnection = new SqlConnection(ChallongeSQLHelperConnectionString))
+            {
+                SqlCommand cmd = new SqlCommand(@"SELECT * FROM dbo.DB_TEAMS_USER WHERE IS_TAG = 1", sqlConnection);
+
+                sqlConnection.Open();
+
+                using (SqlDataReader reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        var rtnItem = new FrayDbTeamsUser();
+
+                        rtnItem.UserId = reader["USER_ID"].ToString();
+                        rtnItem.UserName = reader["USER_NAME"].ToString();
+                        rtnItem.IsTag = bool.Parse(reader["IS_TAG"].ToString());
+
+                        rtnList.Add(rtnItem);
+                    }
+                }
+            }
+
+            return rtnList;
+        }
+
         public static FrayDbTeamsUser SqlInsertTeamsUser(FrayDbTeamsUser user)
         {
             using (SqlConnection sqlConnection = new SqlConnection(ChallongeSQLHelperConnectionString))

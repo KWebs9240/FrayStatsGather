@@ -1,12 +1,12 @@
 using System;
+using System.Collections.Generic;
 using ChallongeApiHelper.SQLHelper;
 using FrayStatsDbEntities;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Host;
 using Microsoft.Bot.Connector;
-using Microsoft.Bot.Connector.Authentication;
+using Microsoft.Bot.Connector.Teams;
 using Microsoft.Bot.Connector.Teams.Models;
-using Microsoft.Bot.Schema;
 using Microsoft.Extensions.Logging;
 
 namespace FrayFunctions
@@ -40,6 +40,20 @@ namespace FrayFunctions
                 MicrosoftAppCredentials.TrustServiceUrl(Environment.GetEnvironmentVariable("ServiceUrl"), DateTime.MaxValue);
 
                 var response = await connectorClient.Conversations.CreateConversationAsync(conversationParameters);
+
+                List<FrayDbTeamsUser> frayTagUsers = ChallongeSQLHelper.SqlGetTagUsers();
+
+                var taggingUsers = Activity.CreateMessageActivity();
+
+                bool first = true;
+                foreach(FrayDbTeamsUser user in frayTagUsers)
+                {
+                    if (!first) { taggingUsers.Text += ", "; }
+                    taggingUsers.AddMentionToText(new ChannelAccount(user.UserId, user.UserName), MentionTextLocation.AppendText);
+                    first = false;
+                }
+
+                await connectorClient.Conversations.ReplyToActivityWithRetriesAsync(response.Id, response.ActivityId, (Activity)taggingUsers);
             }
 
             log.LogInformation($"C# Timer trigger function executed at: {DateTime.Now}");

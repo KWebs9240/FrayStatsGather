@@ -12,7 +12,7 @@ namespace FrayFunctions
     public static class CreateFray
     {
         [FunctionName("CreateFray")]
-        public static void Run([TimerTrigger("0 0 11 * * 1")]TimerInfo myTimer, ILogger log)
+        public static void Run([TimerTrigger("0 0 11 * * 1"), Disable()]TimerInfo myTimer, ILogger log)
         {
             log.LogInformation($"C# Timer trigger function executed at: {DateTime.Now}");
 
