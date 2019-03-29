@@ -16,6 +16,8 @@ namespace FrataBot.Web.Controllers.TeamsMsgHandlers
     {
         public async Task HandleMessage(ConnectorClient connector, Activity activity)
         {
+            ChallongeSQLHelper.ChallongeSQLHelperConnectionString = ConfigurationManager.AppSettings["dbConnection"];
+
             FrayDbTeamsUser teamsUser = ChallongeSQLHelper.SqlGetSingleUser(activity.From.Id);
 
             bool existingUser = teamsUser != null;
