@@ -16,20 +16,22 @@ namespace FrataBot.Web.Controllers.TeamsMsgHandlers
     {
         public async Task HandleMessage(ConnectorClient connector, Activity activity)
         {
+            var channelThing = activity.GetChannelData<TeamsChannelData>();
             ChallongeSQLHelper.ChallongeSQLHelperConnectionString = ConfigurationManager.AppSettings["dbConnection"];
 
-            FrayDbTeamsUser teamsUser = ChallongeSQLHelper.SqlGetSingleUser(activity.From.Id);
+            FrayDbTeamsUser teamsUser = ChallongeSQLHelper.SqlGetSingleUser(activity.From.Id, activity.ChannelId);
 
             bool existingUser = teamsUser != null;
 
             teamsUser = teamsUser ?? new FrayDbTeamsUser() { UserId = activity.From.Id, UserName = activity.From.Name };
             teamsUser.IsTag = true;
+            teamsUser.ChannelId = channelThing.Channel.Id;
 
-            if(existingUser) { ChallongeSQLHelper.SqlUpdateTeamsUser(activity.From.Id, teamsUser); }
+            //if(existingUser) { ChallongeSQLHelper.SqlUpdateTeamsUser(activity.From.Id, teamsUser); }
             if(!existingUser) { ChallongeSQLHelper.SqlInsertTeamsUser(teamsUser); }
 
             Activity reply = activity.CreateReply();
-            reply.Text = existingUser ? $"Updated information for {activity.From.Name}" : $"Added information for {activity.From.Name}";
+            reply.Text = existingUser ? "Nothing to see here, you already exist" : $"Added information for {activity.From.Name}";
             
             await connector.Conversations.ReplyToActivityWithRetriesAsync(reply);
         }

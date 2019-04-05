@@ -24,36 +24,45 @@ namespace FrayFunctions
 
             foreach (FrayDbTeamsChannel chan in ChallongeSQLHelper.SqlGetPostChannels())
             {
-                var conversationParameters = new ConversationParameters
+                try
                 {
-                    IsGroup = true,
-                    ChannelData = new TeamsChannelData
+                    var conversationParameters = new ConversationParameters
                     {
-                        Channel = new ChannelInfo(chan.ChannelId),
-                    },
-                    Activity = (Activity)postyBoi
-                };
+                        IsGroup = true,
+                        ChannelData = new TeamsChannelData
+                        {
+                            Channel = new ChannelInfo(chan.ChannelId),
+                        },
+                        Activity = (Activity)postyBoi
+                    };
 
-                var connectorClient = new ConnectorClient(new Uri(Environment.GetEnvironmentVariable("ServiceUrl"))
-                    , microsoftAppId: Environment.GetEnvironmentVariable("MicrosoftAppId")
-                    , microsoftAppPassword: Environment.GetEnvironmentVariable("MicrosoftAppPassword"));
-                MicrosoftAppCredentials.TrustServiceUrl(Environment.GetEnvironmentVariable("ServiceUrl"), DateTime.MaxValue);
+                    var connectorClient = new ConnectorClient(new Uri(Environment.GetEnvironmentVariable("ServiceUrl"))
+                        , microsoftAppId: Environment.GetEnvironmentVariable("MicrosoftAppId")
+                        , microsoftAppPassword: Environment.GetEnvironmentVariable("MicrosoftAppPassword"));
+                    MicrosoftAppCredentials.TrustServiceUrl(Environment.GetEnvironmentVariable("ServiceUrl"), DateTime.MaxValue);
 
-                var response = await connectorClient.Conversations.CreateConversationAsync(conversationParameters);
+                    var response = await connectorClient.Conversations.CreateConversationAsync(conversationParameters);
 
-                List<FrayDbTeamsUser> frayTagUsers = ChallongeSQLHelper.SqlGetTagUsers();
+                    List<FrayDbTeamsUser> frayTagUsers = ChallongeSQLHelper.SqlGetTagUsers(chan.ChannelId);
 
-                var taggingUsers = Activity.CreateMessageActivity();
+                    var taggingUsers = Activity.CreateMessageActivity();
 
-                bool first = true;
-                foreach(FrayDbTeamsUser user in frayTagUsers)
-                {
-                    if (!first) { taggingUsers.Text += ", "; }
-                    taggingUsers.AddMentionToText(new ChannelAccount(user.UserId, user.UserName), MentionTextLocation.AppendText);
-                    first = false;
+                    bool first = true;
+                    foreach (FrayDbTeamsUser user in frayTagUsers)
+                    {
+                        if (!first) { taggingUsers.Text += ", "; }
+                        taggingUsers.AddMentionToText(new ChannelAccount(user.UserId, user.UserName), MentionTextLocation.AppendText);
+                        first = false;
+                    }
+
+                    if (string.IsNullOrEmpty(taggingUsers.Text)) { taggingUsers.Text = "All dressed up and no one to tag"; }
+
+                    await connectorClient.Conversations.ReplyToActivityWithRetriesAsync(response.Id, response.ActivityId, (Activity)taggingUsers);
                 }
-
-                await connectorClient.Conversations.ReplyToActivityWithRetriesAsync(response.Id, response.ActivityId, (Activity)taggingUsers);
+                catch(Exception ex)
+                {
+                    //figure out what to do with this
+                }
             }
 
             log.LogInformation($"C# Timer trigger function executed at: {DateTime.Now}");

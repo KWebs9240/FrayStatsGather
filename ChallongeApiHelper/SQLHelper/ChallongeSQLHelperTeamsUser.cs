@@ -12,15 +12,16 @@ namespace ChallongeApiHelper.SQLHelper
 {
     public static partial class ChallongeSQLHelper
     {
-        public static FrayDbTeamsUser SqlGetSingleUser(string id)
+        public static FrayDbTeamsUser SqlGetSingleUser(string id, string channelId)
         {
             FrayDbTeamsUser rtnItem = null;
 
             using (SqlConnection sqlConnection = new SqlConnection(ChallongeSQLHelperConnectionString))
             {
-                SqlCommand cmd = new SqlCommand(@"SELECT * FROM dbo.DB_TEAMS_USER WHERE USER_ID = @UserId", sqlConnection);
+                SqlCommand cmd = new SqlCommand(@"SELECT * FROM dbo.DB_TEAMS_USER WHERE USER_ID = @UserId AND CHANNEL_ID = @ChannelId", sqlConnection);
 
                 cmd.Parameters.AddWithValue("@UserId", id);
+                cmd.Parameters.AddWithValue("@ChannelId", channelId);
 
                 sqlConnection.Open();
 
@@ -33,6 +34,7 @@ namespace ChallongeApiHelper.SQLHelper
                         rtnItem.UserId = reader["USER_ID"].ToString();
                         rtnItem.UserName = reader["USER_NAME"].ToString();
                         rtnItem.IsTag = bool.Parse(reader["IS_TAG"].ToString());
+                        rtnItem.ChannelId = reader["CHANNEL_ID"].ToString();
                     }
                 }
             }
@@ -40,13 +42,17 @@ namespace ChallongeApiHelper.SQLHelper
             return rtnItem;
         }
 
-        public static List<FrayDbTeamsUser> SqlGetTagUsers()
+        public static List<FrayDbTeamsUser> SqlGetTagUsers(string channelId)
         {
             List<FrayDbTeamsUser> rtnList = new List<FrayDbTeamsUser>();
 
             using (SqlConnection sqlConnection = new SqlConnection(ChallongeSQLHelperConnectionString))
             {
-                SqlCommand cmd = new SqlCommand(@"SELECT * FROM dbo.DB_TEAMS_USER WHERE IS_TAG = 1", sqlConnection);
+                SqlCommand cmd = new SqlCommand(@"SELECT * FROM dbo.DB_TEAMS_USER
+                    WHERE IS_TAG = 1 
+                    AND CHANNEL_ID = @ChannelId", sqlConnection);
+
+                cmd.Parameters.AddWithValue("@ChannelId", channelId);
 
                 sqlConnection.Open();
 
@@ -59,6 +65,7 @@ namespace ChallongeApiHelper.SQLHelper
                         rtnItem.UserId = reader["USER_ID"].ToString();
                         rtnItem.UserName = reader["USER_NAME"].ToString();
                         rtnItem.IsTag = bool.Parse(reader["IS_TAG"].ToString());
+                        rtnItem.ChannelId = reader["CHANNEL_ID"].ToString();
 
                         rtnList.Add(rtnItem);
                     }
@@ -76,18 +83,21 @@ namespace ChallongeApiHelper.SQLHelper
                 (
                     USER_ID,
                     USER_NAME,
-                    IS_TAG
+                    IS_TAG,
+                    CHANNEL_ID
                 )
                 VALUES
                 (
                     @UserId,
                     @UserName,
-                    @IsTag
+                    @IsTag,
+                    @ChannelId
                 )", sqlConnection);
 
                 cmd.Parameters.AddWithValue("@UserId", user.UserId);
                 cmd.Parameters.AddWithValue("@UserName", user.UserName);
                 cmd.Parameters.AddWithValue("@IsTag", user.IsTag);
+                cmd.Parameters.AddWithValue("@ChannelId", user.ChannelId);
 
                 sqlConnection.Open();
 
@@ -104,12 +114,14 @@ namespace ChallongeApiHelper.SQLHelper
                 SqlCommand cmd = new SqlCommand(@"UPDATE dbo.DB_TEAMS_USER SET
                 USER_ID = @UserId,
                 USER_NAME = @UserName,
-                IS_TAG = @IsTag
+                IS_TAG = @IsTag,
+                CHANNEL_ID = @ChannelId,
                 WHERE USER_ID = @OldUserId", sqlConnection);
 
                 cmd.Parameters.AddWithValue("@UserId", user.UserId);
                 cmd.Parameters.AddWithValue("@UserName", user.UserName);
                 cmd.Parameters.AddWithValue("@IsTag", user.IsTag);
+                cmd.Parameters.AddWithValue("@ChannelId", user.ChannelId);
                 cmd.Parameters.AddWithValue("@OldUserId", id);
 
                 sqlConnection.Open();
