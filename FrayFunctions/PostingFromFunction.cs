@@ -20,7 +20,7 @@ namespace FrayFunctions
             FrayDbCurrentWeek currentInfo = ChallongeSQLHelper.GetCurrentWeekInfo();
             var postyBoi = Activity.CreateMessageActivity();
 
-            postyBoi.Text = $"Current signup link\n\n[Drop it like it's hot]({currentInfo.SignupUrl})";
+            postyBoi.Text = $"Current signup link\n\n[Week {currentInfo.CurrentWeekNum.ToString()} Signup]({currentInfo.SignupUrl})";
 
             foreach (FrayDbTeamsChannel chan in ChallongeSQLHelper.SqlGetPostChannels())
             {
