@@ -44,7 +44,8 @@ namespace FraytaBot.Web.Controllers
         {
             new AddChannelMsgHandler(),
             new GetServiceUrlMsgHandler(),
-            new SaveUserMsgHandler()
+            new SaveUserMsgHandler(),
+            new MeQuestionableMsgHandler()
         };
 
         public static async Task YouBrokeIt(ConnectorClient connector, Activity activity, Exception ex)

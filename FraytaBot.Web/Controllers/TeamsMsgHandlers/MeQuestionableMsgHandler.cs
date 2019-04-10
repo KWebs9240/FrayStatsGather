@@ -16,7 +16,7 @@ namespace FrataBot.Web.Controllers.TeamsMsgHandlers
     {
         public async Task HandleMessage(ConnectorClient connector, Activity activity)
         {
-            Activity reply = activity.CreateReply("So that worked");
+            Activity reply = activity.CreateReply("Understood");
 
             await connector.Conversations.ReplyToActivityWithRetriesAsync(reply);
         }
