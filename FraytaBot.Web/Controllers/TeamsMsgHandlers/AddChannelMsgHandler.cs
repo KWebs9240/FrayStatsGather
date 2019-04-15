@@ -46,7 +46,8 @@ namespace FrataBot.Web.Controllers.TeamsMsgHandlers
                     {
                         ChannelId = channelThing.Channel.Id,
                         TeamId = channelThing.Team.Id,
-                        ChannelName = "General"
+                        ChannelName = "General",
+                        IsPost = true
                     };
 
                     ChallongeSQLHelper.SqlSaveChannel(addChannel);
@@ -62,7 +63,8 @@ namespace FrataBot.Web.Controllers.TeamsMsgHandlers
                     {
                         ChannelId = currentChannel.Id,
                         TeamId = channelThing.Team.Id,
-                        ChannelName = currentChannel.Name
+                        ChannelName = currentChannel.Name,
+                        IsPost = true
                     };
 
                     ChallongeSQLHelper.SqlSaveChannel(addChannel);

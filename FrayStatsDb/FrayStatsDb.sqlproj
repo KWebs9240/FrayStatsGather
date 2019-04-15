@@ -69,6 +69,9 @@
     <Build Include="Table\DB_CURRENT_WEEK.sql" />
     <Build Include="Table\DB_TEAMS_CHANNEL.sql" />
     <Build Include="Table\DB_TEAMS_TEAM.sql" />
+    <Build Include="Table\DB_TEAMS_USER.sql" />
+    <Build Include="View\VW_PLAYER_POINTS.sql" />
+    <Build Include="View\VW_WEIGHTED_WIN_LOSS.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="FrayStatsDb.refactorlog" />

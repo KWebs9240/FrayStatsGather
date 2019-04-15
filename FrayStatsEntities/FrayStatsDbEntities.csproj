@@ -44,6 +44,7 @@
     <Compile Include="FrayDbMatch.cs" />
     <Compile Include="FrayDbCurrentWeek.cs" />
     <Compile Include="FrayDbTeamsChannel.cs" />
+    <Compile Include="FrayDbTeamsUser.cs" />
     <Compile Include="FrayDbTeamsTeam.cs" />
     <Compile Include="FrayDbParticipant.cs" />
     <Compile Include="FrayDbSet.cs" />
