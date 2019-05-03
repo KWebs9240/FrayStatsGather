@@ -19,7 +19,7 @@ namespace FrataBot.Web.Controllers.TeamsMsgHandlers
             var channelThing = activity.GetChannelData<TeamsChannelData>();
             ChallongeSQLHelper.ChallongeSQLHelperConnectionString = ConfigurationManager.AppSettings["dbConnection"];
 
-            FrayDbTeamsUser teamsUser = ChallongeSQLHelper.SqlGetSingleUser(activity.From.Id, activity.ChannelId);
+            FrayDbTeamsUser teamsUser = ChallongeSQLHelper.SqlGetSingleUser(activity.From.Id, channelThing.Channel.Id);
 
             bool existingUser = teamsUser != null;
 
@@ -31,7 +31,14 @@ namespace FrataBot.Web.Controllers.TeamsMsgHandlers
             if(!existingUser) { ChallongeSQLHelper.SqlInsertTeamsUser(teamsUser); }
 
             Activity reply = activity.CreateReply();
-            reply.Text = existingUser ? "Nothing to see here, you already exist" : $"Added information for {activity.From.Name}";
+            if(existingUser)
+            {
+                reply.AddMentionToText(activity.From, MentionTextLocation.AppendText);
+            }
+            else
+            {
+                reply.Text = $"Added information for {activity.From.Name}";
+            }
             
             await connector.Conversations.ReplyToActivityWithRetriesAsync(reply);
         }
