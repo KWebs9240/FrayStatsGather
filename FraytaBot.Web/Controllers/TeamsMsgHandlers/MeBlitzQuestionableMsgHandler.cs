@@ -36,7 +36,9 @@ namespace FrataBot.Web.Controllers.TeamsMsgHandlers
         {
             if(activity.Type.Equals("message"))
             {
-                return activity.From.Name.ToLower().Equals("kyle webster")
+                HashSet<string> usersWhoCanBlitz = new HashSet<string>() { "kyle webster", "george wu", "thomas walter" };
+
+                return usersWhoCanBlitz.Contains(activity.From.Name.ToLower())
                     && activity.GetTextWithoutMentions().ToLower().Contains("blitz");
             }
 
