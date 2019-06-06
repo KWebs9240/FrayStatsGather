@@ -28,6 +28,7 @@ namespace ChallongeApiHelper.SQLHelper
                         rtnItem.CurrentWeekNum = int.Parse(reader["CURRENT_WEEK_NUM"].ToString());
                         rtnItem.SignupUrl = reader["SIGNUP_URL"].ToString();
                         rtnItem.ConversationId = reader["CONVERSATION_ID"].ToString();
+                        rtnItem.TournamentId = reader["TOURNAMENT_ID"] == DBNull.Value ? null : (int?)int.Parse(reader["TOURNAMENT_ID"].ToString());
                     }
                 }
             }
@@ -62,6 +63,24 @@ namespace ChallongeApiHelper.SQLHelper
                 ", sqlConnection);
 
                 cmd.Parameters.AddWithValue("@newConversation", newConversation);
+
+                sqlConnection.Open();
+
+                cmd.ExecuteNonQuery();
+            }
+
+            return true;
+        }
+
+        public static bool SetCurrentTournamnetId(int newTournyId)
+        {
+            using (SqlConnection sqlConnection = new SqlConnection(ChallongeSQLHelperConnectionString))
+            {
+                SqlCommand cmd = new SqlCommand(@"UPDATE dbo.DB_CURRENT_WEEK SET
+                TOURNAMENT_ID = @newTournyId
+                ", sqlConnection);
+
+                cmd.Parameters.AddWithValue("@newTournyId", newTournyId);
 
                 sqlConnection.Open();
 
