@@ -14,7 +14,7 @@ namespace FrayFunctions
     public static class CallingPeopleNames
     {
         [FunctionName("CallingPeopleNames")]
-        public static async void Run([TimerTrigger("0 * * * * *"), Disable()]TimerInfo myTimer, ILogger log)
+        public static async void Run([TimerTrigger("0 * * * * *")]TimerInfo myTimer, ILogger log)
         {   
             var postyBoi = Activity.CreateMessageActivity();
 

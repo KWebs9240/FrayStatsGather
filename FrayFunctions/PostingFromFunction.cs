@@ -14,7 +14,7 @@ namespace FrayFunctions
     public static class PostingFromFunction
     {
         [FunctionName("PostingFromFunction")]
-        public static async void Run([TimerTrigger("0 0 15 * * 1"), Disable()]TimerInfo myTimer, ILogger log)
+        public static async void Run([TimerTrigger("0 0 15 * * 1")]TimerInfo myTimer, ILogger log)
         {
             ChallongeSQLHelper.ChallongeSQLHelperConnectionString = Environment.GetEnvironmentVariable("dbConnection");
             FrayDbCurrentWeek currentInfo = ChallongeSQLHelper.GetCurrentWeekInfo();

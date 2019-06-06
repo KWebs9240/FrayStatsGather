@@ -15,7 +15,7 @@ namespace FrayFunctions
     public static class StartFray
     {
         [FunctionName("StartFray")]
-        public static async void Run([TimerTrigger("0 15 15 * * 5"), Disable()]TimerInfo myTimer, ILogger log)
+        public static async void Run([TimerTrigger("0 15 15 * * 5")]TimerInfo myTimer, ILogger log)
         {
             ChallongeSQLHelper.ChallongeSQLHelperConnectionString = Environment.GetEnvironmentVariable("dbConnection");
             ChallongeApiHelper.HttpHelper.ChallongeHttpHelper.setAuthorizationHeader(Environment.GetEnvironmentVariable("ApiUsername"), Environment.GetEnvironmentVariable("ApiPassword"));

@@ -15,7 +15,7 @@ namespace FrayFunctions
     public static class ShuffleAndOpenFray
     {
         [FunctionName("ShuffleAndOpenFray")]
-        public static async void Run([TimerTrigger("0 36 14 * * 5"), Disable()]TimerInfo myTimer, ILogger log)
+        public static async void Run([TimerTrigger("0 36 14 * * 5")]TimerInfo myTimer, ILogger log)
         {
             ChallongeSQLHelper.ChallongeSQLHelperConnectionString = Environment.GetEnvironmentVariable("dbConnection");
             ChallongeApiHelper.HttpHelper.ChallongeHttpHelper.setAuthorizationHeader(Environment.GetEnvironmentVariable("ApiUsername"), Environment.GetEnvironmentVariable("ApiPassword"));
