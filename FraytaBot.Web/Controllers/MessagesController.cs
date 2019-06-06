@@ -47,7 +47,8 @@ namespace FraytaBot.Web.Controllers
             new SaveUserMsgHandler(),
             new MeBlitzQuestionableMsgHandler(),
             new TestingIdsMsgHandler(),
-            new NotDeadMsgHandler()
+            new NotDeadMsgHandler(),
+            new MarkAsCurrentConversationMsgHandler()
         };
 
         public static async Task YouBrokeIt(ConnectorClient connector, Activity activity, Exception ex)

@@ -135,6 +135,8 @@
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\MessagesController.cs" />
+    <Compile Include="Controllers\TeamsMsgHandlers\MarkAsCurrentConversationMsgHandler.cs" />
+    <Compile Include="Controllers\TeamsMsgHandlers\ActionFinderMsgHandler.cs" />
     <Compile Include="Controllers\TeamsMsgHandlers\NotDeadMsgHandler.cs" />
     <Compile Include="Controllers\TeamsMsgHandlers\MeBlitzQuestionableMsgHandler.cs" />
     <Compile Include="Controllers\TeamsMsgHandlers\TestingIdsMsgHandler.cs" />
