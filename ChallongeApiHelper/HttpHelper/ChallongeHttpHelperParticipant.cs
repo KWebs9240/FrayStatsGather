@@ -16,5 +16,12 @@ namespace ChallongeApiHelper.HttpHelper
 
             return JsonConvert.DeserializeObject<List<ParticipantHolderGarbage>>(participantResponse).Select(x => x.participant).ToList();
         }
-    }
+
+        public static List<ParticipantRetrieval> ShuffleSeeds(int tournamentId)
+        {
+            var postResponse = Post($"tournaments/{tournamentId.ToString()}/participants/randomize.json", string.Empty);
+
+            return JsonConvert.DeserializeObject<List<ParticipantHolderGarbage>>(postResponse).Select(x => x.participant).ToList();
+        }
+}
 }

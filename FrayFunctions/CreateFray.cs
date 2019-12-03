@@ -12,7 +12,7 @@ namespace FrayFunctions
     public static class CreateFray
     {
         [FunctionName("CreateFray")]
-        public static void Run([TimerTrigger("0 0 11 * * 1")]TimerInfo myTimer, ILogger log)
+        public static void Run([TimerTrigger("0 0 12 * * 1")]TimerInfo myTimer, ILogger log)
         {
             log.LogInformation($"C# Timer trigger function executed at: {DateTime.Now}");
 
@@ -52,6 +52,7 @@ namespace FrayFunctions
             var createdTournamnet = ChallongeApiHelper.HttpHelper.ChallongeHttpHelper.PostNewTournament(tournamentToCreate);
 
             ChallongeSQLHelper.SetCurrentSignupUrl(createdTournamnet.sign_up_url);
+            ChallongeSQLHelper.SetCurrentTournamnetId(createdTournamnet.id);
 
             log.LogInformation("Weekly tournament scheduled succesfully");
         }

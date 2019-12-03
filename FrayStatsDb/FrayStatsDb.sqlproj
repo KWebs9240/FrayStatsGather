@@ -72,6 +72,9 @@
     <Build Include="Table\DB_TEAMS_USER.sql" />
     <Build Include="View\VW_PLAYER_POINTS.sql" />
     <Build Include="View\VW_WEIGHTED_WIN_LOSS.sql" />
+    <Build Include="View\VW_PLAYER_POINTS_BY_WEEK.sql" />
+    <Build Include="View\VW_WEIGHTED_WIN_LOSS_V2.sql" />
+    <Build Include="View\Copy of VW_PLAYER_POINTS_BY_WEEK.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="FrayStatsDb.refactorlog" />

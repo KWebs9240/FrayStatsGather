@@ -58,6 +58,8 @@ namespace FrayFunctions
                     if (string.IsNullOrEmpty(taggingUsers.Text)) { taggingUsers.Text = "All dressed up and no one to tag"; }
 
                     await connectorClient.Conversations.ReplyToActivityWithRetriesAsync(response.Id, response.ActivityId, (Activity)taggingUsers);
+
+                    ChallongeSQLHelper.SetCurrentConversation(response.Id);
                 }
                 catch(Exception ex)
                 {

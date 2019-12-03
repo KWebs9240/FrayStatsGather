@@ -10,5 +10,7 @@ namespace FrayStatsDbEntities
     {
         public int CurrentWeekNum { get; set; }
         public string SignupUrl { get; set; }
+        public string ConversationId { get; set; }
+        public int? TournamentId { get; set; }
     }
 }

@@ -30,5 +30,19 @@ namespace ChallongeApiHelper.HttpHelper
 
             return JsonConvert.DeserializeObject<TournamentHolderGarbage>(postResponse).tournament;
         }
+
+        public static string OpenPredictionsTournament(int tournamentId)
+        {
+            var postResponse = Post($"tournaments/{tournamentId}/open_for_predictions.json", string.Empty);
+
+            return postResponse;
+        }
+
+        public static string StartTournament(int tournamentId)
+        {
+            var postResponse = Post($"tournaments/{tournamentId}/start.json", string.Empty);
+
+            return postResponse;
+        }
     }
 }
