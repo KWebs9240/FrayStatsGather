@@ -12,9 +12,11 @@ using Microsoft.Bot.Connector.Teams.Models;
 
 namespace FrataBot.Web.Controllers.TeamsMsgHandlers
 {
-    public class SaveUserMsgHandler : ITeamsMsgHandler
+    public class SaveUserMsgHandler : BaseTeamsMsgHandler
     {
-        public async Task HandleMessage(ConnectorClient connector, Activity activity)
+        public override string HandlerName => "SaveUser";
+
+        public async override Task<bool> DoHandleMessage(ConnectorClient connector, Activity activity)
         {
             var channelThing = activity.GetChannelData<TeamsChannelData>();
             ChallongeSQLHelper.ChallongeSQLHelperConnectionString = ConfigurationManager.AppSettings["dbConnection"];
@@ -28,10 +30,10 @@ namespace FrataBot.Web.Controllers.TeamsMsgHandlers
             teamsUser.ChannelId = channelThing.Channel.Id;
 
             //if(existingUser) { ChallongeSQLHelper.SqlUpdateTeamsUser(activity.From.Id, teamsUser); }
-            if(!existingUser) { ChallongeSQLHelper.SqlInsertTeamsUser(teamsUser); }
+            if (!existingUser) { ChallongeSQLHelper.SqlInsertTeamsUser(teamsUser); }
 
             Activity reply = activity.CreateReply();
-            if(existingUser)
+            if (existingUser)
             {
                 reply.AddMentionToText(activity.From, MentionTextLocation.AppendText);
             }
@@ -39,13 +41,15 @@ namespace FrataBot.Web.Controllers.TeamsMsgHandlers
             {
                 reply.Text = $"Added information for {activity.From.Name}";
             }
-            
+
             await connector.Conversations.ReplyToActivityWithRetriesAsync(reply);
+
+            return true;
         }
 
-        public bool MessageTrigger(Activity activity)
+        public override bool DoMessageTrigger(Activity activity)
         {
-            if(activity.Type.Equals("message"))
+            if (activity.Type.Equals("message"))
             {
                 return activity.GetTextWithoutMentions().ToLower().Equals("tag me");
             }

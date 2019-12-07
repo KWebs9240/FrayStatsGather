@@ -12,18 +12,22 @@ using Microsoft.Bot.Connector.Teams.Models;
 
 namespace FrataBot.Web.Controllers.TeamsMsgHandlers
 {
-    public class GetServiceUrlMsgHandler : ITeamsMsgHandler
+    public class GetServiceUrlMsgHandler : BaseTeamsMsgHandler
     {
-        public async Task HandleMessage(ConnectorClient connector, Activity activity)
+        public override string HandlerName => "GetServiceUrl";
+
+        public async override Task<bool> DoHandleMessage(ConnectorClient connector, Activity activity)
         {
-            Activity reply = activity.CreateReply(activity.ServiceUrl); ;
+            Activity reply = activity.CreateReply(activity.ServiceUrl);
 
             await connector.Conversations.ReplyToActivityWithRetriesAsync(reply);
+
+            return true;
         }
 
-        public bool MessageTrigger(Activity activity)
+        public override bool DoMessageTrigger(Activity activity)
         {
-            if(activity.Type.Equals("message"))
+            if (activity.Type.Equals("message"))
             {
                 return activity.GetTextWithoutMentions().ToLower().Equals("gimme the service url");
             }

@@ -12,9 +12,11 @@ using Microsoft.Bot.Connector.Teams.Models;
 
 namespace FrataBot.Web.Controllers.TeamsMsgHandlers
 {
-    public class AddChannelMsgHandler : ITeamsMsgHandler
+    public class AddChannelMsgHandler : BaseTeamsMsgHandler
     {
-        public async Task HandleMessage(ConnectorClient connector, Activity activity)
+        public override string HandlerName => "AddChannel";
+
+        public async override Task<bool> DoHandleMessage(ConnectorClient connector, Activity activity)
         {
             bool rejected = true;
             ChallongeSQLHelper.ChallongeSQLHelperConnectionString = ConfigurationManager.AppSettings["dbConnection"];
@@ -37,7 +39,7 @@ namespace FrataBot.Web.Controllers.TeamsMsgHandlers
 
             //Check to see whether we've already got the channel
             FrayDbTeamsChannel existingChannel = ChallongeSQLHelper.SqlGetSingleChannel(channelThing.Channel.Id, channelThing.Team.Id);
-            if(existingChannel == null)
+            if (existingChannel == null)
             {
                 //If your channel id matches the team id, you're in the autogenerate General
                 if (channelThing.Channel.Id.Equals(channelThing.Team.Id))
@@ -74,7 +76,7 @@ namespace FrataBot.Web.Controllers.TeamsMsgHandlers
 
             Activity reply = null;
 
-            if(rejected)
+            if (rejected)
             {
                 reply = activity.CreateReply("That's going to be a hard pass");
             }
@@ -84,11 +86,13 @@ namespace FrataBot.Web.Controllers.TeamsMsgHandlers
             }
 
             await connector.Conversations.ReplyToActivityWithRetriesAsync(reply);
+
+            return true;
         }
 
-        public bool MessageTrigger(Activity activity)
+        public override bool DoMessageTrigger(Activity activity)
         {
-            if(activity.Type.Equals("message"))
+            if (activity.Type.Equals("message"))
             {
                 return activity.GetTextWithoutMentions().ToLower().Equals("over here");
             }

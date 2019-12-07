@@ -12,18 +12,22 @@ using Microsoft.Bot.Connector.Teams.Models;
 
 namespace FrataBot.Web.Controllers.TeamsMsgHandlers
 {
-    public class ThomasQuestionableMsgHandler : ITeamsMsgHandler
+    public class ThomasQuestionableMsgHandler : BaseTeamsMsgHandler
     {
-        public async Task HandleMessage(ConnectorClient connector, Activity activity)
+        public override string HandlerName => "ThomasQuestionable";
+
+        public async override Task<bool> DoHandleMessage(ConnectorClient connector, Activity activity)
         {
             Activity reply = activity.CreateReply("Sir... I'm going to need you to settle down");
 
             await connector.Conversations.ReplyToActivityWithRetriesAsync(reply);
+
+            return true;
         }
 
-        public bool MessageTrigger(Activity activity)
+        public override bool DoMessageTrigger(Activity activity)
         {
-            if(activity.Type.Equals("message"))
+            if (activity.Type.Equals("message"))
             {
                 return activity.From.Name.ToLower().Equals("thomas walter");
             }

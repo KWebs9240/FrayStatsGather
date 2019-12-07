@@ -13,13 +13,16 @@ using Newtonsoft.Json;
 
 namespace FrataBot.Web.Controllers.TeamsMsgHandlers
 {
-    public class MarkAsCurrentConversationMsgHandler : ITeamsMsgHandler
+    public class MarkAsCurrentConversationMsgHandler : BaseTeamsMsgHandler
     {
-        public async Task HandleMessage(ConnectorClient connector, Activity activity)
+        public override string HandlerName => "MarkAsCurrentConversation";
+
+        public async override Task<bool> DoHandleMessage(ConnectorClient connector, Activity activity)
         {
             ChallongeSQLHelper.ChallongeSQLHelperConnectionString = ConfigurationManager.AppSettings["dbConnection"];
             ChallongeSQLHelper.SetCurrentConversation(activity.Conversation.Id);
 
+            return true;
             //Activity reply = activity.CreateReply($"{string.Join("\n\n", activity.Properties.Children().Select(x => x.Path))}");
 
             //Activity reply = activity.CreateReply($"Dead");
@@ -27,7 +30,7 @@ namespace FrataBot.Web.Controllers.TeamsMsgHandlers
             //await connector.Conversations.ReplyToActivityWithRetriesAsync(reply);
         }
 
-        public bool MessageTrigger(Activity activity)
+        public override bool DoMessageTrigger(Activity activity)
         {
             if (activity.Type.Equals("messageReaction"))
             {
